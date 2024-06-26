@@ -11,6 +11,10 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
+  def edit
+    @question = Question.find(params[:id])
+  end
+
   private
 
 
