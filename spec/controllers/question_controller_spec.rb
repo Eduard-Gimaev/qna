@@ -70,8 +70,8 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       it 're-renders new view' do
-        # post :create, params: { question: attribute_for(:question, :invalid)}
-        # expect(response).to render_template :new
+        post :create, params: { question: attributes_for(:question, :invalid)}
+        expect(response).to render_template :new
       end
     end
   end
