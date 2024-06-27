@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
 
-  before_action :load_question, only: %i[show edit] 
+  before_action :load_question, only: %i[show edit update] 
 
   def index
     @questions = Question.all
@@ -23,6 +23,9 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+  end
+
+  def update
   end
 
   private
