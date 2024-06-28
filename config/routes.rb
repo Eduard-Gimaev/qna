@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
-  resources :questions
+  resources :questions do
+    resources :answers, shallow: true, only: %i[index]
+  end
+
+  resources :answers
 
 end
