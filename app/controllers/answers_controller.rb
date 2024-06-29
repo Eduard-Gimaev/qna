@@ -1,12 +1,6 @@
 class AnswersController < ApplicationController
   before_action :find_question, only: %i[new create]
 
-  def index
-    @question = Question.find(params[:id])
-    @answers = Answer.all
-  end
-
-
   def new
     @answer = @question.answers.new
   end
