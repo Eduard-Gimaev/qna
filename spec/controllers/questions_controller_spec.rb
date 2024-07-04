@@ -4,6 +4,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:question) {create(:question)}
 
   describe 'GET #index' do 
+    
     let(:questions) {create_list(:question, 3)}
 
     before { get :index }
@@ -25,7 +26,18 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+    let(:user) {create(:user)}
+
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[:user]
+      sign_in(user)
+    end
+
     before { get :new }
+
+    it 'assigns a new Question to @question' do
+      expect(assigns(:question)).to be_a_new(Question)
+    end
 
     it 'renders new view' do
       expect(response).to render_template :new
