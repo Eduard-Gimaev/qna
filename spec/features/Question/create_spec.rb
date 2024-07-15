@@ -8,13 +8,18 @@ feature 'User can create question', %q{
   given(:user) { create(:user) }
 
   describe 'Authenticated user' do
-    background { sign_in(user) }
+    background do
+      sign_in(user)
+
+      visit questions_path
+      click_on 'Ask question'
+    end
 
     scenario 'asks a question' do
       fill_in 'Title', with: 'Title of the question'
       fill_in 'Body', with: 'Text of the question'
       click_on 'Ask'
-      # save_and_open_page
+      
       expect(page).to have_content 'Your question was successfully created.'
       expect(page).to have_content 'Title of the question'
       expect(page).to have_content 'Text of the question'

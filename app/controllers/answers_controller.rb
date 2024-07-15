@@ -8,7 +8,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     if @answer.save
-      redirect_to question_path(@question)
+      redirect_to question_path(@question), notice: 'Your answer successfully created.'
     else
       render :new
     end
@@ -25,6 +25,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, :title)
+    params.require(:answer).permit(:title, :body)
   end
 end
