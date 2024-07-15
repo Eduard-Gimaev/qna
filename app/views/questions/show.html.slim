@@ -1,5 +1,13 @@
 h1 = question.title
-h3 = question.body
+p = question.body
+h3 =  'List of answers:'
+= question.answers.count
 
-h2 Add an answers
+- question.answers.each do |answer|
+    p = answer.title
+    p = answer.body
+
+
+p = '--------------'
+h3 = 'Add an answer:'
 = render 'answers/form'
