@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User can sign out', %q{
   In order to terminate the current session
   as an authenticated user
-  I would like be able to sign out
+  I would like to be able to sign out
 } do 
   given(:user) {create(:user)}
 

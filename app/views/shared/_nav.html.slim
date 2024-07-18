@@ -1,0 +1,6 @@
+.header class='container'
+  .div class='row'
+    .nav class='col'
+      -if user_signed_in?
+        =button_to 'Log Out', destroy_user_session_path, method: :delete
+  
