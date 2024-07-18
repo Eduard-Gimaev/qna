@@ -1,22 +1,23 @@
 require 'rails_helper'
 
-feature 'User can delete own answer', %q{
+feature 'User can delete his own answer', %q{
   In order to delete an answer
   as authenticated user
   I would like to be able to delete an answer
 } do 
-
-  given(:question) { create :question, user: user }
-  given!(:answer) { create :answer, question: question, user: user }
+  
   given(:user) { create(:user) }
   given(:other_user) { create(:user) }
+  given(:question) { create :question, user: user }
+  given!(:answer) { create :answer, question: question, user: user }
+  
 
   scenario 'User tries to delete own answer' do 
     sign_in(user)
     visit question_path(question)
     expect(page).to have_content answer.body
   
-    click_on 'Delete answer'
+    click_on 'Delete an answer'
 
     expect(page).to have_content 'Answer successfully deleted.'
     expect(page).to have_no_content answer.body
