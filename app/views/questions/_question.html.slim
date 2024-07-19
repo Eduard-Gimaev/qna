@@ -1,0 +1,6 @@
+-if question.persisted?
+  p= question.body
+  - if current_user&.author?(question)
+    = button_to 'Delete a question', question_path(find_question),
+      method: :delete,
+      data: { confirm: 'Are you sure?' }

@@ -1,1 +1,9 @@
-h1 = question.title
+h3 = 'List of questions'
+= render find_question
+
+h3 =  'List of answers:'
+= render find_question.answers
+
+p = '--------------'
+p = 'Add an answer:'
+= render 'answers/form'
