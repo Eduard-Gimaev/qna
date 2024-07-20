@@ -17,18 +17,15 @@ feature 'User can create answer', %q{
     end
 
     scenario 'gives an asnwer to a question' do
-      fill_in 'answer[title]', with: 'title'
       fill_in 'answer[body]', with: 'body'
-
       click_on 'Reply'
 
-      expect(page).to have_content 'title'
       expect(page).to have_content 'body'
     end
 
     scenario 'gives an asnwer with errors' do 
       click_on 'Reply'
-      expect(page).to have_content "Title can't be blank"
+      expect(page).to have_content "Body can't be blank"
 
     end
   end

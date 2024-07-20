@@ -17,7 +17,6 @@ RSpec.describe AnswersController, type: :controller do
                                       question_id: question.id)}
         end.to change(Answer, :count).by(1)
       end
-
     end
 
     context 'with invalid attributes' do
@@ -31,9 +30,7 @@ RSpec.describe AnswersController, type: :controller do
                                                 question_id: question.id)}
         end.not_to change(Answer, :count)
       end
-      
     end
-
   end
 
 end

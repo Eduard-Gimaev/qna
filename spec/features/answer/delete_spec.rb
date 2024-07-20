@@ -16,7 +16,6 @@ feature 'User can delete his own answer', %q{
     sign_in(user)
     visit question_path(question)
     expect(page).to have_content answer.body
-  
     click_on 'Delete an answer'
 
     expect(page).to have_content 'Answer successfully deleted.'
@@ -27,7 +26,7 @@ feature 'User can delete his own answer', %q{
     sign_in(other_user)
     visit question_path(question)
     expect(page).to have_content answer.body
-    expect(page).to_not have_link 'Delete answer'
+    expect(page).to_not have_link 'Delete an answer'
   end
 
 end

@@ -1,6 +1,7 @@
--if answer.persisted?
-  p= answer.body
-  - if current_user&.author?(answer)
-    = button_to 'Delete an answer', answer_path(answer),
+div id = "answer_#{answer.id}"
+  tr
+    td= answer.body
+    - if current_user&.author?(answer)
+      td= link_to 'Delete an answer', answer_path(answer),
       method: :delete,
       data: { confirm: 'Are you sure?' }

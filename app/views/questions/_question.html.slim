@@ -1,6 +1,9 @@
--if question.persisted?
-  p= question.body
-  - if current_user&.author?(question)
-    = button_to 'Delete a question', question_path(find_question),
+div id = "question_#{question.id}"
+  tr
+    td= question.title
+    td= question.body
+    td= link_to ' Show ', question_path(question)
+    - if current_user&.author?(question)
+      td= link_to ' Delete a question ', question_path(find_question),
       method: :delete,
       data: { confirm: 'Are you sure?' }
