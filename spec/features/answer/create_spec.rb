@@ -6,7 +6,7 @@ feature 'User can create answer', %q{
   I'd like to be able to give answer while in the question page
 } do
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', :js do
 
     given(:user) { create(:user) }
     given(:question) { create(:question, user: user) }
@@ -17,10 +17,14 @@ feature 'User can create answer', %q{
     end
 
     scenario 'gives an asnwer to a question' do
-      fill_in 'answer[body]', with: 'body'
+      fill_in 'answer[body]', with: 'My answer'
       click_on 'Reply'
 
-      expect(page).to have_content 'body'
+      # wait_for_ajax
+
+      expect(current_path).to eq question_path(question)
+      expect(page).to have_content 'My answer'
+      
     end
 
     scenario 'gives an asnwer with errors' do 
@@ -30,7 +34,7 @@ feature 'User can create answer', %q{
     end
   end
 
-  describe 'Unauthenticated user' do 
+  describe 'Unauthenticated user', :js do 
     given(:user) { create(:user) }
     given(:question) { create(:question, user: user) }
 

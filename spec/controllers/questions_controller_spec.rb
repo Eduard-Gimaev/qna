@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do 
-  let(:user) {create(:user)}
-  let(:question) {create(:question)}
+  let(:user) { create(:user) }
+  let(:user2) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
     before { login(user) }
     
-    let(:questions) {create_list(:question, 3)}
+    let(:questions) {create_list(:question, 3, user: user)}
 
     before { get :index }
 
@@ -102,8 +103,8 @@ RSpec.describe QuestionsController, type: :controller do
       it 'does not change question' do 
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'QuestionTitle'
+        expect(question.body).to eq 'QuestionBody'
       end
       it 're-redirect to view edit' do
         expect(response).to render_template :edit
@@ -113,7 +114,7 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'DELETE #destroy' do
     before { login(user) }
-    let!(:question) {create(:question)}
+    let!(:question) {create(:question, user: user)}
     it 'destroy question'do 
       expect { delete :destroy, params: { id: question} }.to change(Question, :count).by(-1)
     end

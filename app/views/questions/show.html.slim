@@ -1,7 +1,19 @@
-h3 = 'List of questions'
-= render find_question
+tr 
+  td = link_to 'Back', questions_path
+  - if current_user&.author?(find_question)
+    td = link_to 'Delete a question', question_path(find_question), method: :delete
+div
+  table
+    tr 
+      td Question:
+      th = render find_question
+div
+  = render 'answers/form'   
+  p = '______________________________'    
+div
+  table
+    tr 
+      th Answers:
+      th = render find_question.answers
 
-h3 =  'List of answers:'
-= render find_question.answers
-p = '--------------'
-= render 'answers/form'
+

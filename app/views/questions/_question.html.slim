@@ -1,9 +1,10 @@
-div id = "question_#{question.id}"
-  tr
-    td= question.title
-    td= question.body
-    td= link_to ' Show ', question_path(question)
-    - if current_user&.author?(question)
-      td= link_to ' Delete a question ', question_path(find_question),
-      method: :delete,
-      data: { confirm: 'Are you sure?' }
+= render 'shared/errors', resource: @question
+div class="card mb-3 mt-3" style="max-width: 18rem"
+  div class="card-header text-center" 
+    = link_to question.title, question
+    = question.body
+    
+  
+
+
+      
