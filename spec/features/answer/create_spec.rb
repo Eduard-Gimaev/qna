@@ -16,7 +16,7 @@ feature 'User can create answer', %q{
       visit question_path(question)
     end
 
-    scenario 'gives an asnwer to a question' do
+    scenario 'gives an asnwer to a question', :js do
       fill_in 'answer[body]', with: 'My answer'
       click_on 'Reply'
 
@@ -34,7 +34,7 @@ feature 'User can create answer', %q{
     end
   end
 
-  describe 'Unauthenticated user', :js do 
+  describe 'Unauthenticated user' do 
     given(:user) { create(:user) }
     given(:question) { create(:question, user: user) }
 

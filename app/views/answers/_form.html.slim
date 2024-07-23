@@ -1,5 +1,7 @@
-= form_with model: [ @question, @answer ], class: 'form-answer hide', local: false do |f|
+.answer-errors
   = render 'shared/errors', resource: @answer
-  p = f.label :body, 'Add your answer here:'
-  p = f.text_area :body
+= form_with model: [ @question, @answer ], class: 'form-answer hide', local: false, class: 'new-answer', remote: true do |f|
+  div
+    p = f.label :body, 'Add your answer here:'
+    p = f.text_area :body
   = f.submit 'Reply'
