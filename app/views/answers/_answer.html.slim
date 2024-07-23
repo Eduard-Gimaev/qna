@@ -1,5 +1,4 @@
-div
-  tr
-    td = answer.body
-    - if current_user&.author?(answer)
-      td = link_to 'Delete an answer', answer_path(answer), method: :delete
+div(id="answer-#{answer.id}") 
+  p = answer.body
+  -if current_user&.author?(answer)
+    p = button_to 'Delete answer', answer_path(answer), method: :delete
