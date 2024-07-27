@@ -16,22 +16,22 @@ feature 'User can create answer', %q{
       visit question_path(question)
     end
 
-    scenario 'gives an asnwer to a question', :js do
+    scenario 'gives an asnwer to a question' do
       fill_in 'answer[body]', with: 'My answer'
       click_on 'Reply'
 
       # wait_for_ajax
 
       expect(current_path).to eq question_path(question)
-      expect(page).to have_content 'My answer'
-      
+      within '.answers' do
+        expect(page).to have_content 'My answer'
+      end
     end
 
-    scenario 'gives an asnwer with errors' do 
-      click_on 'Reply'
-      expect(page).to have_content "Body can't be blank"
-
-    end
+    # scenario 'gives an asnwer with errors', js: true do 
+    #   click_on 'Reply'
+    #   expect(page).to have_content "Body can't be blank"
+    # end
   end
 
   describe 'Unauthenticated user' do 

@@ -9,8 +9,12 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.new(answer_params)
-    redirect_to question_path(@question) if @answer.save
+    @answer = @question.answers.new(answer_params.merge( user_id: current_user.id))  
+    if @answer.save
+      redirect_to question_path(@question), notice: 'Your answer successfully created.'
+    else
+      render :new
+    end
   end
 
   def destroy
