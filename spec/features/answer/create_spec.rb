@@ -6,7 +6,7 @@ feature 'User can create answer', %q{
   I'd like to be able to give answer while in the question page
 } do
 
-  describe 'Authenticated user', js: true do
+  describe 'Authenticated user', :js do
 
     given(:user) { create(:user) }
     given(:question) { create(:question, user: user) }

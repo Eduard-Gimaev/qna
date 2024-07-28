@@ -6,9 +6,9 @@ feature 'User can delete his own answer', %q{
   I would like to be able to delete an answer
 } do 
   
-  given(:user) { create(:user) }
-  given(:other_user) { create(:user) }
-  given(:question) { create :question, user: user }
+  given!(:user) { create(:user) }
+  given!(:other_user) { create(:user) }
+  given!(:question) { create :question, user: user }
   given!(:answer) { create :answer, question: question, user: user }
   
 
