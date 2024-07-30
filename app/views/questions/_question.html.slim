@@ -1,8 +1,9 @@
 = render 'shared/errors', resource: @question
 div class="card mb-3 mt-3" style="max-width: 18rem"
   div class="card-header text-center" 
-    = link_to question.title, question
-    = question.body
+    tr = question.title
+    tr = " | "
+    tr = link_to question.body, question
     
   
 

@@ -1,5 +1,6 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
+  
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update destroy]
 
@@ -14,7 +15,7 @@ class AnswersController < ApplicationController
 
   def update 
     @answer.update(answer_params) if current_user.author?(@answer)
-    # @question = @answer.question
+    @question = @answer.question
   end
 
   def destroy

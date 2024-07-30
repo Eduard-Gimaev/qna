@@ -8,8 +8,8 @@ feature 'User can create answer', %q{
 
   describe 'Authenticated user', :js do
 
-    given(:user) { create(:user) }
-    given(:question) { create(:question, user: user) }
+    given!(:user) { create(:user) }
+    given!(:question) { create :question, user: user }
 
     background do
       sign_in(user)
@@ -18,7 +18,9 @@ feature 'User can create answer', %q{
 
     scenario 'gives an asnwer to a question' do
       fill_in 'answer[body]', with: 'My answer'
+      
       click_on 'Reply'
+      
 
       expect(current_path).to eq question_path(question)
       within '.answers' do

@@ -11,12 +11,12 @@ feature 'User can edit an answer', %q{
   given!(:question) { create :question, user: user }
   given!(:answer) { create :answer, question: question, user: user }
 
-  describe 'Authenticated user' do 
+  describe 'Authenticated user', :js do 
 
     background do
       sign_in(user)
       visit question_path(question)
-      click_on 'Edit'
+      click_on 'Edit an answer'
     end
 
     scenario 'edits his answer' do 
@@ -24,9 +24,9 @@ feature 'User can edit an answer', %q{
         fill_in 'answer[body]', with: 'edited answer'
         click_on 'Save'
 
-        expect(page).to_not have_content answer.body
+        expect(page).to have_no_content answer.body
         expect(page).to have_content 'edited answer'
-        expect(page).to_not have_selector 'textarea'
+        expect(page).to have_no_css 'textarea'
       end
     end
     scenario 'edits his answer with errors'
