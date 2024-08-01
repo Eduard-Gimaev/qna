@@ -15,11 +15,15 @@ feature 'User can delete his own answer', %q{
   scenario 'User tries to delete own answer', :js do 
     sign_in(user)
     visit question_path(question)
-    expect(page).to have_content answer.body
+    
+    within '.answers' do
+        expect(page).to have_content answer.body
+    end
+
     click_on 'Delete an answer'
 
-    expect(page).to have_content 'Answer successfully deleted.'
-    expect(page).to have_no_content answer.body
+    expect(page).to_not have_content answer.body
+    expect(page).to have_content 'Answer deleted successfully'
   end
 
   scenario 'Other user tries to delete an answer that does not belong', :js do 

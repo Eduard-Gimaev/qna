@@ -4,6 +4,17 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
     tr = question.title
     tr = " | "
     tr = link_to question.body, question
+
+- if user_signed_in? && current_user&.author?(find_question)
+    = link_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+    = button_to 'Delete a question', question_path(find_question), method: :delete
+
+    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}"}, local: false do |f|
+      = f.label :title, 'New title'
+      = f.text_field :title
+      = f.label :body, 'New body'
+      = f.text_area :body
+      = f.submit 'Save'
     
   
 

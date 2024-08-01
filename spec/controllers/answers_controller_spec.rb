@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do 
-  let(:user) { create(:user) }
-  let(:user2) { create(:user) }
-  let(:question) { create(:question, user: user) }
-  let(:answer) { create(:answer, question: question, user: user) }
+  let!(:user) { create(:user) }
+  let!(:user2) { create(:user) }
+  let!(:question) { create(:question, user: user) }
+  let!(:answer) { create(:answer, question: question, user: user) }
 
   describe 'POST #create' do
 
@@ -64,5 +64,30 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    before { login(user) }
+    
+    context 'by an author of the answer' do
+      it 'deletes the answer' do
+        expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
+      end
+    end
+
+    context 'by non-autho of the answer' do
+      it 'does not destroy the answer, if user_id is wrong' do 
+        login(user2)
+        expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(0)
+      end
+    end
+
+      it 'render destroy' do
+        delete :destroy, params: { id: answer }, format: :js
+        expect(response).to render_template :destroy
+      end
+
+  end
+   
+
 
 end

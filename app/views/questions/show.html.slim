@@ -3,9 +3,6 @@
   
 .question
   p = render find_question
-  - if user_signed_in? && current_user&.author?(find_question)
-    = link_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: @question.id }
-    = button_to 'Delete a question', question_path(find_question), method: :delete
 
 .new-answer
   = render 'answers/form'
