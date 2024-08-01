@@ -6,13 +6,13 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
     tr = link_to question.body, question
 
 - if user_signed_in? && current_user&.author?(find_question)
-    = link_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: @question.id }
+    = link_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
     = button_to 'Delete a question', question_path(find_question), method: :delete
 
-    = form_with model: @question, class: 'hidden', html: { id: "edit-question-#{@question.id}"}, local: false do |f|
-      = f.label :title, 'New title'
+    = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
+      = f.label :title, 'Question title'
       = f.text_field :title
-      = f.label :body, 'New body'
+      = f.label :body, 'Question body'
       = f.text_area :body
       = f.submit 'Save'
     
