@@ -12,7 +12,7 @@ feature 'User can delete his own answer', %q{
   given!(:answer) { create :answer, question: question, user: user }
   
 
-  scenario 'User tries to delete own answer' do 
+  scenario 'User tries to delete own answer', :js do 
     sign_in(user)
     visit question_path(question)
     expect(page).to have_content answer.body
@@ -22,7 +22,7 @@ feature 'User can delete his own answer', %q{
     expect(page).to have_no_content answer.body
   end
 
-  scenario 'Other user tries to delete an answer that does not belong' do 
+  scenario 'Other user tries to delete an answer that does not belong', :js do 
     sign_in(other_user)
     visit question_path(question)
     expect(page).to have_content answer.body
