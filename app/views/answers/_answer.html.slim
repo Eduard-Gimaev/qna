@@ -2,7 +2,7 @@ div id="answer-#{answer.id}"
   p = answer.body
   - if user_signed_in? && answer.body && current_user&.author?(answer)
     = link_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = button_to 'Delete an answer', answer_path(answer), method: :delete
+    = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
 
     = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
         = f.label :body, 'Your answer'
