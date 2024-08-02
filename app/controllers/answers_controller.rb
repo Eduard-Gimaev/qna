@@ -17,6 +17,13 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
+  def destroy
+    @answer.destroy if current_user.author?(@answer)
+  end
+
+
+
+
   private
 
   def find_question

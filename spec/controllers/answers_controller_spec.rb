@@ -74,7 +74,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'by non-autho of the answer' do
+    context 'by non-author of the answer' do
       it 'does not destroy the answer, if user_id is wrong' do 
         login(user2)
         expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(0)
@@ -85,9 +85,5 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy, params: { id: answer }, format: :js
         expect(response).to render_template :destroy
       end
-
   end
-   
-
-
 end
