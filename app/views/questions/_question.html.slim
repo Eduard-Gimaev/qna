@@ -1,4 +1,6 @@
-= render 'shared/errors', resource: @question
+.question-errors
+  = render 'shared/errors', resource: question
+
 div class="card mb-3 mt-3" style="max-width: 18rem"
   div class="card-header text-center" 
     tr = question.title
