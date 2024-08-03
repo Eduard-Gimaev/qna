@@ -65,6 +65,34 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #mark_as_best' do
+    context 'User tries to set the best answer to the foreign question' do
+      before { login(user) }
+      before { patch :mark_as_best, params: { id: answer }, format: :js }
+
+      it 'marks the best answer' do
+        expect { answer.reload }.to change { answer.best }.from(false).to(true)
+      end
+
+      it 'renders mark_best template' do
+        expect(response).to render_template :mark_as_best
+      end
+    end
+
+    context 'User tries to set the best answer to his own question' do
+      before { login(user2) }
+      before { patch :mark_as_best, params: { id: answer }, format: :js }
+
+      it 'Does not set the best answer' do
+        expect { answer.reload }.not_to change(answer, :best)
+      end
+
+      it 'renders mark_best template' do
+        expect(response).to render_template :mark_as_best
+      end
+    end
+  end
+
   describe 'DELETE #destroy' do
     before { login(user) }
     
