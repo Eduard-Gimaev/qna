@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   def show
     find_question 
     @answer = Answer.new
+    @answers = @question.answers.sort_by_best.order(:id)
   end
 
   def new
@@ -27,7 +28,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    find_question.update(question_params) if find_question.save
+    find_question.update(question_params) if current_user.author?(@question)
   end
 
   def destroy
@@ -50,6 +51,5 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body).merge(user_id: current_user.id)
   end
-
 
 end
