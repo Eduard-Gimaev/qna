@@ -11,7 +11,7 @@ feature 'User can edit his question', %q{
   given!(:question) { create :question, user: user }
 
   describe 'Authenticated user' do
-    describe 'Author' do
+    describe 'author' do
 
       background do
         sign_in(user)

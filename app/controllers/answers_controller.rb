@@ -21,9 +21,6 @@ class AnswersController < ApplicationController
     @answer.destroy if current_user.author?(@answer)
   end
 
-
-
-
   private
 
   def find_question

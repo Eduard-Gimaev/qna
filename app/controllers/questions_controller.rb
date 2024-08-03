@@ -27,7 +27,7 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    find_question.update(question_params) if @question.save
+    find_question.update(question_params) if find_question.save
   end
 
   def destroy
