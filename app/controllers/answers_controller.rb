@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :find_question, only: %i[new create]
@@ -10,20 +12,20 @@ class AnswersController < ApplicationController
   def edit; end
 
   def create
-    @answer = @question.answers.new(answer_params)  
+    @answer = @question.answers.new(answer_params)
     @answer.save
   end
 
-  def update 
+  def update
     @answer.update(answer_params) if current_user.author?(@answer)
     @question = @answer.question
   end
 
   def mark_as_best
-    if current_user.author?(@answer.question)
-      @answer.mark_as_best
-      @question = @answer.question
-    end
+    return unless current_user.author?(@answer.question)
+
+    @answer.mark_as_best
+    @question = @answer.question
   end
 
   def destroy
