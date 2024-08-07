@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
   let(:question2) { create(:question, user: user2) }
   let(:answer2) { create(:answer, question: question2, user: user2) }
 
-  it 'ahould have a correct author' do
+  it 'should have a correct author' do
     expect(user1).to be_author(question1)
     expect(user1).to be_author(answer1)
     expect(user2).to be_author(question2)

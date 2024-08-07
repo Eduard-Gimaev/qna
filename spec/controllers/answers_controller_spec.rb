@@ -66,7 +66,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #mark_as_best' do
-    context 'User tries to set the best answer to the foreign question' do
+    context 'When user tries to set the best answer to the foreign question' do
       before { login(user) }
       before { patch :mark_as_best, params: { id: answer }, format: :js }
 
@@ -79,7 +79,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
 
-    context 'User tries to set the best answer to his own question' do
+    context 'When user tries to set the best answer to his own question' do
       before { login(user2) }
       before { patch :mark_as_best, params: { id: answer }, format: :js }
 
@@ -96,13 +96,13 @@ RSpec.describe AnswersController, type: :controller do
   describe 'DELETE #destroy' do
     before { login(user) }
     
-    context 'by an author of the answer' do
+    context 'When an author of the answer tries to delete an answer' do
       it 'deletes the answer' do
         expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(-1)
       end
     end
 
-    context 'by non-author of the answer' do
+    context 'When non author of the answer tries to delete an answer' do
       it 'does not destroy the answer, if user_id is wrong' do 
         login(user2)
         expect { delete :destroy, params: { id: answer }, format: :js }.to change(Answer, :count).by(0)

@@ -11,7 +11,7 @@ feature 'User can edit his question', %q{
   given!(:question) { create :question, user: user }
 
   describe 'Authenticated user' do
-    describe 'author' do
+    context 'When an author' do
 
       background do
         sign_in(user)
@@ -53,11 +53,13 @@ feature 'User can edit his question', %q{
         end
       end
     end
-    scenario "tries to edit other user's question", js: true do
-      sign_in(other_user)
-      visit question_path(question)
+    context "When non author" do 
+      scenario "tries to edit other user's question", js: true do
+        sign_in(other_user)
+        visit question_path(question)
 
-      expect(page).to_not have_link 'Edit question'
+        expect(page).to_not have_link 'Edit question'
+      end
     end
   end
 
