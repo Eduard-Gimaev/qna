@@ -16,7 +16,6 @@ feature 'User can delete his own question', '
     visit question_path(question)
     expect(page).to have_content question.body
     click_on 'Delete a question'
-
     expect(page).to have_no_content question.title
   end
 
