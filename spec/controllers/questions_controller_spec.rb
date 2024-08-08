@@ -1,27 +1,34 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe QuestionsController, type: :controller do 
-  let(:user) {create(:user)}
-  let(:question) {create(:question)}
+RSpec.describe QuestionsController do
+  let(:user) { create(:user) }
+  let!(:user2) { create(:user) }
+  let(:question) { create(:question, user:) }
 
   describe 'GET #index' do
-    before { login(user) }
-    
-    let(:questions) {create_list(:question, 3)}
+    before do
+      login(user)
+      get :index
+    end
 
-    before { get :index }
+    let(:questions) { create_list(:question, 3, user:) }
 
-    it 'Populates an array of all questions' do 
+    it 'Populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
 
-    it 'Renders index view' do 
+    it 'Renders index view' do
       expect(response).to render_template :index
     end
   end
+
   describe 'GET #show' do
-    before { login(user) }
-    before { get :show, params: { id: question } }
+    before do
+      login(user)
+      get :show, params: { id: question }
+    end
 
     it 'renders show view' do
       expect(response).to render_template :show
@@ -29,8 +36,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-    before { login(user) }
-    before { get :new }
+    before do
+      login(user)
+      get :new
+    end
 
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
@@ -42,8 +51,10 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #edit' do
-    before { login(user) }
-    before { get :edit, params: { id: question } }
+    before do
+      login(user)
+      get :edit, params: { id: question }
+    end
 
     it 'renders edit view' do
       expect(response).to render_template :edit
@@ -52,24 +63,27 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'POST #create' do
     before { login(user) }
+
     context 'with valid attributes' do
       it 'saves a new question in the database' do
-        expect {post :create, params: { question: attributes_for(:question)}}.to change(Question, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: {question: attributes_for(:question)}
+        post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save a question in DB' do
-        expect {post :create, params: { question: attributes_for(:question, :invalid)}}.to_not change(Question, :count)
+        expect do
+          post :create, params: { question: attributes_for(:question, :invalid) }
+        end.not_to change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: { question: attributes_for(:question, :invalid)}
+        post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
       end
     end
@@ -77,50 +91,55 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'PATCH #update' do
     before { login(user) }
+
     context 'with valid attributes' do
       it 'assigns the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question)}
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(assigns(:question)).to eq question
       end
 
-      it 'change question attributes' do
-        patch :update, params: { id: question, question: { title: 'new title', body: 'new body'}}
+      it 'changes question attributes' do
+        patch :update, params: { id: question, question: { title: 'new title', body: 'new body' } }, format: :js
         question.reload
 
         expect(question.title).to eq 'new title'
         expect(question.body).to eq 'new body'
       end
 
-      it 'redirect to updated question' do
-        patch :update, params: { id: question, question: attributes_for(:question)}
+      it 'redirects to updated question' do
+        patch :update, params: { id: question, question: attributes_for(:question) }, format: :js
         expect(response).to redirect_to question
       end
     end
 
     context 'with invalid attributes' do
-      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid)} }
-      it 'does not change question' do 
+      before { patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js }
+
+      it 'does not change question' do
         question.reload
 
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'QuestionTitle'
+        expect(question.body).to eq 'QuestionBody'
       end
-      it 're-redirect to view edit' do
-        expect(response).to render_template :edit
+
+      it 're-redirects to view edit' do
+        expect(response).to render_template :update
       end
     end
   end
 
   describe 'DELETE #destroy' do
     before { login(user) }
-    let!(:question) {create(:question)}
-    it 'destroy question'do 
-      expect { delete :destroy, params: { id: question} }.to change(Question, :count).by(-1)
+
+    let!(:question) { create(:question, user:) }
+
+    it 'destroy question' do
+      expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
     end
+
     it 'redirect to index' do
-      delete :destroy, params: { id: question}
-      expect(response).to redirect_to questions_path #:index
+      delete :destroy, params: { id: question }
+      expect(response).to redirect_to questions_path
     end
   end
-
 end

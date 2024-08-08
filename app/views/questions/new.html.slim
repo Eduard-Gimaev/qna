@@ -1,8 +1,5 @@
-= render 'shared/errors', resource: @question 
+.div 
+  = link_to 'Back', questions_path
 
-= form_with model: @question do |form|
-  = form.label :title
-  = form.text_field :title
-  = form.label :body
-  = form.text_area :body
-  = form.submit 'Ask'
+.new-question 
+  = render 'form'

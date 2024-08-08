@@ -1,10 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe Question, type: :model do
-  it { should validate_presence_of(:title) }
-  it { should validate_presence_of(:body) }
-  it { should have_many(:answers).dependent(true) }
-  it { should belong_to(:user) }
-  
+RSpec.describe Question do
+  it { is_expected.to validate_presence_of(:title) }
+  it { is_expected.to validate_presence_of(:body) }
+  it { is_expected.to have_many(:answers).dependent(true) }
+  it { is_expected.to belong_to(:user) }
 end
-

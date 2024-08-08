@@ -1,0 +1,46 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+  - rubocop-rails
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rspec_rails
+
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.2.2
+  SuggestExtensions: false
+
+Rails/ThreeStateBooleanColumn:
+  Exclude:
+    - 'db/migrate/20240803184522_add_best_to_answers.rb'  
+
+Layout/LineLength:
+  Max: 154
+
+Metrics/BlockLength:
+  Max: 26
+
+Style/Documentation:
+  Enabled: false
+
+Rails/FilePath:
+  EnforcedStyle: arguments
+
+Rails/BulkChangeTable:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 7
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false

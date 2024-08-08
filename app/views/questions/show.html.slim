@@ -1,9 +1,12 @@
-h3 = 'List of questions'
-= render find_question
+.div 
+  = link_to 'Back', questions_path
+  
+.question
+  p = render find_question
 
-h3 =  'List of answers:'
-= render find_question.answers
-
-p = '--------------'
-p = 'Add an answer:'
-= render 'answers/form'
+.new-answer
+  = render 'answers/form'
+p = '______________________________'    
+.answers
+  h3 Answers
+  = render @answers
