@@ -2,7 +2,10 @@
   = link_to 'Back', questions_path
   
 .question
-  p = render find_question
+  p = render @question
+
+- if @question.file.attached?
+  p = link_to @question.file.filename.to_s, url_for(@question.file)
 
 .new-answer
   = render 'answers/form'
