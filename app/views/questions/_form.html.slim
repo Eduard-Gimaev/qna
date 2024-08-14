@@ -1,9 +1,15 @@
 .question-errors
   = render 'shared/errors', resource: @question
 
-= form_with model: @question, local: true do |form|
-  = form.label :title
-  = form.text_field :title
-  = form.label :body
-  = form.text_area :body
-  = form.submit 'Ask'
+= form_with model: @question, local: true do |f|
+  p 
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+  p
+    = f.label :file
+    = f.file_field :file
+
+  p = f.submit 'Ask'
