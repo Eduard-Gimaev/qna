@@ -10,6 +10,6 @@
     = f.text_area :body
   p
     = f.label :file
-    = f.file_field :file
+    = f.file_field :file, multiple: true
 
   p = f.submit 'Ask'

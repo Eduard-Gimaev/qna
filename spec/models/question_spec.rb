@@ -7,7 +7,7 @@ RSpec.describe Question do
   it { is_expected.to validate_presence_of(:body) }
   it { is_expected.to have_many(:answers).dependent(true) }
   it { is_expected.to belong_to(:user) }
-  it 'has an attached file' do 
-    expect(Question.new.file).to be_an_instance_of(ActiveStorage::Attached::One)
+  it 'has many attached files' do 
+    expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
   end
 end
