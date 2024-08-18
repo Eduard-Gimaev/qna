@@ -20,17 +20,18 @@ feature 'User can edit his question', "
       end
 
       scenario 'edits his question', :js do
-        fill_in 'question[title]', with: 'Edited title'
-        fill_in 'question[body]', with: 'Edited body'
-
-        click_on 'Save'
-
         within '.question' do
+          fill_in 'question[title]', with: 'Edited title'
+          fill_in 'question[body]', with: 'Edited body'
+          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+          click_on 'Save'
+
           expect(page).to have_no_content question.title
           expect(page).to have_no_content question.body
           expect(page).to have_content 'Edited title'
           expect(page).to have_content 'Edited body'
           expect(page).to have_no_css 'textarea'
+          expect(page).to have_link 'spec_helper.rb'
         end
       end
 
