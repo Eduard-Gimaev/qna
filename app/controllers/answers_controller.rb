@@ -35,7 +35,7 @@ class AnswersController < ApplicationController
   private
 
   def find_question
-    @question = Question.find(params[:question_id])
+    @question = Question.with_attached_files.find(params[:question_id])
   end
 
   def find_answer
@@ -43,6 +43,6 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body).merge(user_id: current_user.id)
+    params.require(:answer).permit(:body, files: []).merge(user_id: current_user.id)
   end
 end

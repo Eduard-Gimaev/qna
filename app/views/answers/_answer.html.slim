@@ -1,13 +1,23 @@
 div id="answer-#{answer.id}"
-  = "| the best answer!" if answer.best
-  p = answer.body
+  p
+    = answer.best ? "#{answer.body} - the best answer!" : "#{answer.body}"
+
   - if user_signed_in? && answer.body && current_user&.author?(answer)
-    = link_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
-    = link_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
+      = button_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
+      = button_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
+    
 
-    = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
-        = f.label :body, 'Your answer'
-        = f.text_area :body
+      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
+        p
+          = f.label :body, 'Your answer'
+          = f.text_area :body
+        p
+          = f.label :files
+          = f.file_field :files
         = f.submit 'Save'
-
+        
+  - if answer.files.attached?
+      - answer.files.each do |file|
+        p = link_to file.filename.to_s, url_for(file)
+      p = '_______________________'
