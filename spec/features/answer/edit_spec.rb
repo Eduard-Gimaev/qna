@@ -13,7 +13,7 @@ feature 'User can edit an answer', '
   given!(:answer) { create(:answer, question:, user:) }
 
   describe 'Authenticated user', :js do
-    describe 'Author' do
+    describe 'When an author' do
       background do
         sign_in(user)
         question.files.attach(io: File.open(Rails.root.join('spec', 'rails_helper.rb')), filename: 'rails_helper.rb', content_type: 'text/plain')
@@ -40,12 +40,11 @@ feature 'User can edit an answer', '
 
       scenario 'tries to delete attachments' do 
         within '.answers' do 
-          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-          click_on 'Save'
-
           expect(page).to have_link 'spec_helper.rb'
 
           click_on 'x'
+          click_on 'Save'
+          
           expect(page).to have_no_link 'spec_helper.rb'
         end
       end
