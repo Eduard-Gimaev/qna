@@ -10,44 +10,45 @@ feature 'User can edit his question', "
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user:) }
+  
 
-  describe 'Authenticated user' do
+  describe 'Authenticated user', :js do
     context 'when an author' do
       background do
         sign_in(user)
+        question.files.attach(io: File.open(Rails.root.join('spec', 'rails_helper.rb')), filename: 'rails_helper.rb', content_type: 'text/plain')
+        question.save
         visit question_path(question)
         click_on 'Edit a question'
       end
 
-      scenario 'edits his question', :js do
+      scenario 'edits his question' do
         within '.question' do
           fill_in 'question[title]', with: 'Edited title'
           fill_in 'question[body]', with: 'Edited body'
           attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
           click_on 'Save'
+          visit question_path(question)
 
           expect(page).to have_no_content question.title
           expect(page).to have_no_content question.body
           expect(page).to have_content 'Edited title'
           expect(page).to have_content 'Edited body'
           expect(page).to have_no_css 'textarea'
-          # expect(page).to have_link 'spec_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
         end
       end
 
       scenario 'tries to delete attachments' do 
         within '.question' do 
-          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
-          click_on 'Save'
-
-          expect(page).to have_link 'spec_helper.rb'
-
-          click_on 'x'
-          expect(page).to have_no_link 'spec_helper.rb'
+          expect(page).to have_link 'rails_helper.rb'
         end
+        click_on 'x'
+
+        expect(page).to have_no_link 'spec_helper.rb'
       end
 
-      scenario 'edits his question with errors', :js do
+      scenario 'edits his question with errors' do
         fill_in 'question[title]', with: ' '
         fill_in 'question[body]', with: ' '
 
@@ -66,7 +67,7 @@ feature 'User can edit his question', "
     end
 
     context 'when non author' do
-      scenario "tries to edit other user's question", :js do
+      scenario "tries to edit other user's question" do
         sign_in(other_user)
         visit question_path(question)
 

@@ -7,16 +7,19 @@ div id="answer-#{answer.id}"
       = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
       = button_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
     
-
-      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
+      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |file|
         p
-          = f.label :body, 'Your answer'
-          = f.text_area :body
+          = file.label :body, 'Your answer'
+          = file.text_area :body
         p
-          = f.label :files
-          = f.file_field :files, multiple: true
+          = file.label :files
+          = file.file_field :files, multiple: true
+        p
+        - answer.files.each do |file|
+          div id="attachment-#{file.id}"
+            = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
 
-        = f.submit 'Save'
+        = file.submit 'Save'
         
   - if answer.files.attached?
       - answer.files.each do |file|

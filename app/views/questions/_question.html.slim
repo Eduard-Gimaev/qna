@@ -22,7 +22,7 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
           = f.label :files
           = f.file_field :files, multiple: true
         p
-          - @question.files.each do |file|
+          - question.files.each do |file|
             div id="attachment-#{file.id}"
               = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
 

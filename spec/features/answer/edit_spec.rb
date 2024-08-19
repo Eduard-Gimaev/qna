@@ -16,6 +16,11 @@ feature 'User can edit an answer', '
     describe 'Author' do
       background do
         sign_in(user)
+        question.files.attach(io: File.open(Rails.root.join('spec', 'rails_helper.rb')), filename: 'rails_helper.rb', content_type: 'text/plain')
+        answer.files.attach(io: File.open(Rails.root.join('spec', 'spec_helper.rb')), filename: 'spec_helper.rb', content_type: 'text/plain')
+        question.save
+        answer.save
+
         visit question_path(question)
         click_on 'Edit an answer'
       end
@@ -30,6 +35,18 @@ feature 'User can edit an answer', '
           expect(page).to have_content 'edited answer'
           expect(page).to have_no_css 'textarea'
           expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'tries to delete attachments' do 
+        within '.answers' do 
+          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+          click_on 'Save'
+
+          expect(page).to have_link 'spec_helper.rb'
+
+          click_on 'x'
+          expect(page).to have_no_link 'spec_helper.rb'
         end
       end
 
