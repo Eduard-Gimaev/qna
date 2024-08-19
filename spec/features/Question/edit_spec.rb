@@ -31,7 +31,19 @@ feature 'User can edit his question', "
           expect(page).to have_content 'Edited title'
           expect(page).to have_content 'Edited body'
           expect(page).to have_no_css 'textarea'
+          # expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'tries to delete attachments' do 
+        within '.question' do 
+          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+          click_on 'Save'
+
           expect(page).to have_link 'spec_helper.rb'
+
+          click_on 'x'
+          expect(page).to have_no_link 'spec_helper.rb'
         end
       end
 
