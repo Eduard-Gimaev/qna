@@ -20,7 +20,7 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
           = f.text_area :body
         p
           = f.label :files
-          = f.file_field :files, multiple: true
+          = f.file_field :files, multiple: true, direct_upload: true
         p
           - question.files.each do |file|
             div id="attachment-#{file.id}"

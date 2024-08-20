@@ -13,7 +13,7 @@ div id="answer-#{answer.id}"
           = file.text_area :body
         p
           = file.label :files
-          = file.file_field :files, multiple: true
+          = file.file_field :files, multiple: true, direct_upload: true
         p
         - answer.files.each do |file|
           div id="attachment-#{file.id}"

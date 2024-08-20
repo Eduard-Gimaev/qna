@@ -14,7 +14,7 @@ class AttachmentsController < ApplicationController
   end
 
   def find_entity(entity)
-    case entity.record_type
+    case entity.record_type 
       when "Question" then Question
       when "Answer" then Answer
     end
