@@ -10,13 +10,12 @@ feature 'User can edit his question', "
   given!(:user) { create(:user) }
   given!(:other_user) { create(:user) }
   given!(:question) { create(:question, user:) }
-  
 
   describe 'Authenticated user', :js do
     context 'when an author' do
       background do
         sign_in(user)
-        question.files.attach(io: File.open(Rails.root.join('spec', 'rails_helper.rb')), filename: 'rails_helper.rb', content_type: 'text/plain')
+        question.files.attach(io: Rails.root.join('spec', 'rails_helper.rb').open, filename: 'rails_helper.rb', content_type: 'text/plain')
         question.save
         visit question_path(question)
         click_on 'Edit a question'
@@ -26,7 +25,7 @@ feature 'User can edit his question', "
         within '.question' do
           fill_in 'question[title]', with: 'Edited title'
           fill_in 'question[body]', with: 'Edited body'
-          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+          attach_file 'File', Rails.root.join('spec', 'spec_helper.rb', 'spec_helper.rb').to_s
           click_on 'Save'
           visit question_path(question)
 
@@ -39,8 +38,8 @@ feature 'User can edit his question', "
         end
       end
 
-      scenario 'tries to delete attachments' do 
-        within '.question' do 
+      scenario 'tries to delete attachments' do
+        within '.question' do
           expect(page).to have_link 'rails_helper.rb'
         end
         click_on 'x'

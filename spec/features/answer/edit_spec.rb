@@ -16,8 +16,8 @@ feature 'User can edit an answer', '
     describe 'When an author' do
       background do
         sign_in(user)
-        question.files.attach(io: File.open(Rails.root.join('spec', 'rails_helper.rb')), filename: 'rails_helper.rb', content_type: 'text/plain')
-        answer.files.attach(io: File.open(Rails.root.join('spec', 'spec_helper.rb')), filename: 'spec_helper.rb', content_type: 'text/plain')
+        question.files.attach(io: Rails.root.join('spec', 'rails_helper.rb').open, filename: 'rails_helper.rb', content_type: 'text/plain')
+        answer.files.attach(io: Rails.root.join('spec', 'spec_helper.rb').open, filename: 'spec_helper.rb', content_type: 'text/plain')
         question.save
         answer.save
 
@@ -28,7 +28,7 @@ feature 'User can edit an answer', '
       scenario 'edits his answer' do
         within '.answers' do
           fill_in 'answer[body]', with: 'edited answer'
-          attach_file 'File', "#{Rails.root}/spec/spec_helper.rb"
+          attach_file 'File', Rails.root.join('spec', 'spec_helper.rb', 'spec_helper.rb').to_s
           click_on 'Save'
 
           expect(page).to have_no_content answer.body
@@ -38,13 +38,13 @@ feature 'User can edit an answer', '
         end
       end
 
-      scenario 'tries to delete attachments' do 
-        within '.answers' do 
+      scenario 'tries to delete attachments' do
+        within '.answers' do
           expect(page).to have_link 'spec_helper.rb'
 
           click_on 'x'
           click_on 'Save'
-          
+
           expect(page).to have_no_link 'spec_helper.rb'
         end
       end

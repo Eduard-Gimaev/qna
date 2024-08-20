@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_attachment, only: %i[destroy]
@@ -9,14 +11,14 @@ class AttachmentsController < ApplicationController
 
   private
 
-  def find_attachment 
+  def find_attachment
     @attachment = ActiveStorage::Attachment.find_by(blob_id: params[:id])
   end
 
   def find_entity(entity)
-    case entity.record_type 
-      when "Question" then Question
-      when "Answer" then Answer
+    case entity.record_type
+    when 'Question' then Question
+    when 'Answer' then Answer
     end
   end
 end

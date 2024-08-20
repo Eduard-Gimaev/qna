@@ -27,11 +27,12 @@ feature 'User can create answer', "
       end
     end
 
-    scenario 'gives an answer with attached file' do 
+    scenario 'gives an answer with attached file' do
       fill_in 'answer[body]', with: 'My answer'
-      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      attach_file 'File',
+                  [Rails.root.join('spec', 'rails_helper.rb', 'rails_helper.rb').to_s, Rails.root.join('spec', 'spec_helper.rb', 'spec_helper.rb').to_s]
       click_on 'Reply'
-      
+
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
