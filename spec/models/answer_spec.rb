@@ -6,8 +6,5 @@ RSpec.describe Answer do
   it { is_expected.to validate_presence_of(:body) }
   it { is_expected.to belong_to(:question) }
   it { is_expected.to belong_to(:user) }
-
-  it 'has many attached files' do
-    expect(described_class.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
-  end
+  it { should have_many_attached(:files) }
 end
