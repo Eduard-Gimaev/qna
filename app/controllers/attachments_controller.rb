@@ -19,6 +19,7 @@ class AttachmentsController < ApplicationController
     case entity.record_type
     when 'Question' then Question
     when 'Answer' then Answer
+    else raise StandardError, entity.inspect
     end
   end
 end
