@@ -50,7 +50,6 @@ feature 'User can create answer', "
     scenario 'tries to create an answer' do
       visit question_path(question)
       click_on 'Reply'
-
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end
