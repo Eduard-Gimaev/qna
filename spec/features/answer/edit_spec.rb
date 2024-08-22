@@ -28,12 +28,13 @@ feature 'User can edit an answer', '
       scenario 'edits his answer' do
         within '.answers' do
           fill_in 'answer[body]', with: 'edited answer'
-          attach_file 'File', Rails.root.join('spec', 'spec_helper.rb', 'spec_helper.rb').to_s
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
           click_on 'Save'
 
           expect(page).to have_no_content answer.body
           expect(page).to have_content 'edited answer'
           expect(page).to have_no_css 'textarea'
+          expect(page).to have_link 'rails_helper.rb'
           expect(page).to have_link 'spec_helper.rb'
         end
       end

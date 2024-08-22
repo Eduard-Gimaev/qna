@@ -7,6 +7,6 @@ module FeatureHelpers
     fill_in 'Password', with: user.password
     click_on 'Log in'
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Ask a new question'
   end
 end

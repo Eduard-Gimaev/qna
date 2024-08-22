@@ -5,7 +5,11 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
   div class="card-header text-center" 
     tr = question.title
     tr = " | "
-    tr = link_to question.body, question
+    tr = question.body
+
+  - if question.files.attached?
+    - question.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
 
   - if user_signed_in? && current_user&.author?(find_question)
       = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }

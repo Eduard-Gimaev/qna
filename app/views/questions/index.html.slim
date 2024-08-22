@@ -1,4 +1,16 @@
-= link_to 'Ask question', new_question_path
 
-h2 All questions
-= render @questions
+p = link_to 'Ask a new question', new_question_path
+
+table border = "1"
+  thead 
+    tr 
+      th colspan="4" All questions:
+    tr
+      td Title
+      td Question
+  tbody 
+    - @questions.each do |question|
+      tr
+        th = question.title
+        td= link_to question.body, question
+        

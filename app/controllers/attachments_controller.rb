@@ -12,7 +12,7 @@ class AttachmentsController < ApplicationController
   private
 
   def find_attachment
-    @attachment = ActiveStorage::Attachment.find_by(blob_id: params[:id])
+    @attachment = ActiveStorage::Attachment.find(params[:id])
   end
 
   def find_entity(entity)
