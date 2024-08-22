@@ -27,6 +27,15 @@ feature 'User can create answer', "
       end
     end
 
+    scenario 'gives an answer with attached file' do
+      fill_in 'answer[body]', with: 'My answer'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Reply'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     scenario 'gives an asnwer with errors' do
       click_on 'Reply'
 
@@ -41,7 +50,6 @@ feature 'User can create answer', "
     scenario 'tries to create an answer' do
       visit question_path(question)
       click_on 'Reply'
-
       expect(page).to have_content 'You need to sign in or sign up before continuing.'
     end
   end

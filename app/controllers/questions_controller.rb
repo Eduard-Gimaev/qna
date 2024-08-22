@@ -9,8 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    find_question
-    @answer = Answer.new
+    @answer = @question.answers.new
     @answers = @question.answers.sort_by_best.order(:id)
   end
 
@@ -42,13 +41,13 @@ class QuestionsController < ApplicationController
 
   # rubocop:disable Naming/MemoizedInstanceVariableName
   def find_question
-    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+    @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new
   end
 
   helper_method :find_question
   # rubocop:enable Naming/MemoizedInstanceVariableName
 
   def question_params
-    params.require(:question).permit(:title, :body).merge(user_id: current_user.id)
+    params.require(:question).permit(:title, :body, files: []).merge(user_id: current_user.id)
   end
 end

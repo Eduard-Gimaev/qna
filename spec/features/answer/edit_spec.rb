@@ -13,9 +13,14 @@ feature 'User can edit an answer', '
   given!(:answer) { create(:answer, question:, user:) }
 
   describe 'Authenticated user', :js do
-    describe 'Author' do
+    describe 'When an author' do
       background do
         sign_in(user)
+        question.files.attach(io: Rails.root.join('spec', 'rails_helper.rb').open, filename: 'rails_helper.rb', content_type: 'text/plain')
+        answer.files.attach(io: Rails.root.join('spec', 'spec_helper.rb').open, filename: 'spec_helper.rb', content_type: 'text/plain')
+        question.save
+        answer.save
+
         visit question_path(question)
         click_on 'Edit an answer'
       end
@@ -23,11 +28,25 @@ feature 'User can edit an answer', '
       scenario 'edits his answer' do
         within '.answers' do
           fill_in 'answer[body]', with: 'edited answer'
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
           click_on 'Save'
 
           expect(page).to have_no_content answer.body
           expect(page).to have_content 'edited answer'
           expect(page).to have_no_css 'textarea'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
+      end
+
+      scenario 'tries to delete attachments' do
+        within '.answers' do
+          expect(page).to have_link 'spec_helper.rb'
+
+          click_on 'x'
+          click_on 'Save'
+
+          expect(page).to have_no_link 'spec_helper.rb'
         end
       end
 

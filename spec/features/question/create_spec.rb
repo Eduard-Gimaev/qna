@@ -14,7 +14,7 @@ feature 'User can create question', "
       sign_in(user)
 
       visit questions_path
-      click_on 'Ask question'
+      click_on 'Ask a new question'
     end
 
     scenario 'asks a question' do
@@ -26,6 +26,16 @@ feature 'User can create question', "
       expect(page).to have_content 'Text of the question'
     end
 
+    scenario 'asks a question with attached file' do
+      fill_in 'Title', with: 'Title of the question'
+      fill_in 'Body', with: 'Text of the question'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     scenario 'asks a question with errors' do
       click_on 'Ask'
 
@@ -35,7 +45,7 @@ feature 'User can create question', "
 
   scenario 'Unauthenticated user tries to ask a question' do
     visit questions_path
-    click_on 'Ask question'
+    click_on 'Ask a new question'
 
     expect(page).to have_content 'You need to sign in or sign up before continuing.'
   end

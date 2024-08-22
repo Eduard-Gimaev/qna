@@ -4,7 +4,7 @@ require 'rails_helper'
 require 'capybara/rspec'
 
 feature 'User can sign in', '
-  In order to ask question
+  In order to Ask a new question
   As an unauthenticated user
   I would like to be able to sign in
 ' do

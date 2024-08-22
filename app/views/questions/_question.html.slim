@@ -5,20 +5,29 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
   div class="card-header text-center" 
     tr = question.title
     tr = " | "
-    tr = link_to question.body, question
+    tr = question.body
 
-- if user_signed_in? && current_user&.author?(find_question)
-    = link_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
-    = button_to 'Delete a question', question_path(find_question), method: :delete
+  - if question.files.attached?
+    - question.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
 
-    = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
-      = f.label :title, 'Question title'
-      = f.text_field :title
-      = f.label :body, 'Question body'
-      = f.text_area :body
-      = f.submit 'Save'
-    
-  
+  - if user_signed_in? && current_user&.author?(find_question)
+      = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
+      = button_to 'Delete a question', question_path(find_question), method: :delete
 
+      = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
+        p
+          = f.label :title, 'Question title'
+          = f.text_field :title
+        p
+          = f.label :body, 'Question body'
+          = f.text_area :body
+        p
+          = f.label :files
+          = f.file_field :files, multiple: true, direct_upload: true
+        p
+          - question.files.each do |file|
+            div id="attachment-#{file.id}"
+              = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
 
-      
+        p = f.submit 'Save'
