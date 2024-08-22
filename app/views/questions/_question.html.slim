@@ -11,6 +11,12 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
     - question.files.each do |file|
       p = link_to file.filename.to_s, url_for(file)
 
+  .links 
+    p links:
+    ul
+      - question.links.each do |l|
+        li = link_to l.name, l.url
+
   - if user_signed_in? && current_user&.author?(find_question)
       = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
       = button_to 'Delete a question', question_path(find_question), method: :delete
