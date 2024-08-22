@@ -12,6 +12,7 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
       p = link_to file.filename.to_s, url_for(file)
 
   .links 
+  - if question.links.any?
     p links:
     ul
       - question.links.each do |l|
