@@ -1,6 +1,12 @@
 div id="answer-#{answer.id}"
   p
     = answer.best ? "#{answer.body} - the best answer!" : "#{answer.body}"
+  .links 
+  - if answer.links.any?
+    p links:
+    ul
+      - answer.links.each do |l|
+        li = link_to l.name, l.url
 
   - if user_signed_in? && answer.body && current_user&.author?(answer)
       = button_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }

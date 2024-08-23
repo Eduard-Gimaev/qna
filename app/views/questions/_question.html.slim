@@ -32,6 +32,16 @@ div class="card mb-3 mt-3" style="max-width: 18rem"
         p
           = f.label :files
           = f.file_field :files, multiple: true, direct_upload: true
+        - if question.links.any?
+          p links:
+        p 
+          =f.fields_for :links do |l|
+            p 
+              = l.label :name, 'Link name'
+              = l.text_field :name
+            p
+              = l.label :url
+              = l.text_area :url
         p
           - question.files.each do |file|
             div id="attachment-#{file.id}"

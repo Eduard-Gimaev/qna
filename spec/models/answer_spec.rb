@@ -7,4 +7,6 @@ RSpec.describe Answer do
   it { is_expected.to belong_to(:question) }
   it { is_expected.to belong_to(:user) }
   it { is_expected.to have_many_attached(:files) }
+  it { is_expected.to have_many(:links).dependent(true) }
+  it { is_expected.to accept_nested_attributes_for(:links) }
 end

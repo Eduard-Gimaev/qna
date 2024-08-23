@@ -2,7 +2,7 @@
 
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
-  before_action :find_question, only: %i[show update]
+  before_action :find_question, only: %i[show edit update]
 
   def index
     @questions = Question.all
@@ -11,6 +11,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.new
     @answers = @question.answers.sort_by_best.order(:id)
+    @answer.links.new
   end
 
   def new
@@ -49,8 +50,6 @@ class QuestionsController < ApplicationController
   # rubocop:enable Naming/MemoizedInstanceVariableName
 
   def question_params
-    params.require(:question).permit(:title, :body, 
-                                    files: [], 
-                                    links_attributes:[:name, :url]).merge(user_id: current_user.id)
+    params.require(:question).permit(:title, :body, files: [], links_attributes:[:name, :url]).merge(user_id: current_user.id)
   end
 end
