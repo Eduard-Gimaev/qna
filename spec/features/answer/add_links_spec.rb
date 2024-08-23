@@ -17,7 +17,7 @@ feature 'User can add links to answer', '
       visit question_path(question)
     end
 
-    scenario 'adds links when give an answer' do
+    scenario 'adds links when give an answer', :js do
       fill_in 'answer[body]', with: 'My answer'
       fill_in 'Link name', with: 'My gist'
       fill_in 'Url', with: gist_url
