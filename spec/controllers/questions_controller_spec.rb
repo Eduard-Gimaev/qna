@@ -25,7 +25,7 @@ RSpec.describe QuestionsController do
   end
 
   describe 'GET #show' do
-    let(:answers) { create_list(:answer, 3, question: question, user: user)}
+    let(:answers) { create_list(:answer, 3, question: question, user: user) }
     before do
       login(user)
       get :show, params: { id: question }
@@ -58,7 +58,7 @@ RSpec.describe QuestionsController do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'assigns a new Question to @question' do
+    it 'assigns a new Link to @question' do
       expect(assigns(:question).links.first).to be_a_new(Link)
     end
 

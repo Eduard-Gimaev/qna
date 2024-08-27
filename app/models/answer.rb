@@ -9,7 +9,7 @@ class Answer < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank
 
   validates :body, presence: true
-  
+
   scope :sort_by_best, -> { order(best: :desc) }
 
   def mark_as_best

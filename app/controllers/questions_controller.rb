@@ -50,6 +50,6 @@ class QuestionsController < ApplicationController
   # rubocop:enable Naming/MemoizedInstanceVariableName
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes:[:name, :url]).merge(user_id: current_user.id)
+    params.require(:question).permit(:title, :body, files: [], links_attributes:%i[name url]).merge(user_id: current_user.id)
   end
 end

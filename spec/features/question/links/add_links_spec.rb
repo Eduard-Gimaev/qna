@@ -9,7 +9,7 @@ feature 'User can add links to question', '
   given!(:question) { create(:question, user:) }
   given(:google_url) { 'https://google.com' }
   given(:yandex_url) { 'https://ya.ru' }
-  
+
   describe 'Authenticated user', :js do
     scenario 'adds links while asking a new question' do
       sign_in(user)
@@ -27,7 +27,7 @@ feature 'User can add links to question', '
         fill_in 'Url', with: yandex_url
       end
       click_on 'Ask'
-      
+
       expect(page).to have_link 'google', href: google_url
       expect(page).to have_link 'yandex', href: yandex_url
     end

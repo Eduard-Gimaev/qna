@@ -9,7 +9,7 @@ feature 'User can edit links in the question', '
   given!(:question) { create(:question, user:) }
   given(:google_url) { 'https://google.com' }
   given(:yandex_url) { 'https://ya.ru' }
-  
+
   describe 'Authenticated user', :js do
     scenario 'edits links' do
       sign_in(user)

@@ -8,7 +8,7 @@ feature 'User can edit links in the question', '
   given(:user) { create(:user) }
   given!(:question) { create(:question, user:) }
   given!(:link) { create(:link, linkable: question) }
-  
+
   describe 'Authenticated user', :js do
     scenario 'deletes links' do
       sign_in(user)

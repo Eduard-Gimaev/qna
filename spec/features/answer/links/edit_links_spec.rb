@@ -10,7 +10,7 @@ feature 'User can edit links in the answer', '
   given!(:answer) { create(:answer, question:, user:) }
   given(:google_url) { 'https://google.com' }
   given(:yandex_url) { 'https://ya.ru' }
-  
+
   describe 'Authenticated user', :js do
     scenario 'edits links' do
       sign_in(user)
@@ -30,7 +30,6 @@ feature 'User can edit links in the answer', '
         end
         click_on 'Save'
 
-      
         expect(page).to have_link 'yandex', href: yandex_url
         expect(page).to have_link 'google', href: google_url
       end
