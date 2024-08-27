@@ -11,12 +11,14 @@ feature 'User can add links to question', '
   given(:yandex_url) { 'https://ya.ru' }
 
   describe 'Authenticated user', :js do
-    scenario 'adds links while asking a new question' do
+    background do
       sign_in(user)
       visit questions_path
       click_on 'Ask a new question'
       fill_in 'question[title]', with: 'Title of the question'
       fill_in 'question[body]', with: 'Text of the question'
+    end
+    scenario 'adds links while asking a new question' do
       fill_in 'Link name', with: 'google'
       fill_in 'Url', with: google_url
 
@@ -30,6 +32,17 @@ feature 'User can add links to question', '
 
       expect(page).to have_link 'google', href: google_url
       expect(page).to have_link 'yandex', href: yandex_url
+    end
+
+    scenario 'adds link with invalid url while asking a new question' do
+      fill_in 'Link name', with: 'google'
+      fill_in 'Url', with: 'invalid url'
+
+      click_on 'Ask'
+      within '.question-errors' do
+        expect(page).to have_content 'Links url is invalid'
+        expect(page).to have_no_link 'google', href: 'invalid url'
+      end
     end
   end
 end
