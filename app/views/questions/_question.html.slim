@@ -22,8 +22,11 @@ table border = "1"
 .links 
   - if question.links.any?
     ul
-      - question.links.each do |l|
-        li = link_to l.name, l.url
+      - question.links.each do |link|
+          - if link.gist?
+            div.gist-content data-gist-id=link.gist_url
+          - else
+            li = link_to link.name, link.url
 
 / - Edit a question -
 = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|

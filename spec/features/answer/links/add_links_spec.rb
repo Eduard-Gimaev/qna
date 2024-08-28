@@ -9,6 +9,7 @@ feature 'User can add links to answer', '
   given!(:question) { create(:question, user:) }
   given(:google_url) { 'https://google.com' }
   given(:yandex_url) { 'https://ya.ru' }
+  given(:gist_url) { 'https://gist.github.com/Eduard-Gimaev/514a5411559d7e42a2d1c74ad56f18bf' }
 
   describe 'Authenticated user', :js do
     background do
@@ -45,6 +46,13 @@ feature 'User can add links to answer', '
         expect(page).to have_content 'Links url is invalid'
         expect(page).to have_no_link 'google', href: 'invalid url'
       end
+    end
+
+    scenario 'adds a link of the gist' do
+      fill_in 'Link name', with: 'Gist'
+      fill_in 'Url', with: gist_url
+      click_on 'Reply'
+      expect(page).to have_content 'Hello world!'
     end
   end
 end

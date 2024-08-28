@@ -11,6 +11,7 @@ require("jquery")
 require("@nathanvda/cocoon")
 import "utilities/answers"
 import "utilities/questions"
+import "utilities/links"
 
 Rails.start()
 Turbolinks.start()

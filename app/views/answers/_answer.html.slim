@@ -14,8 +14,11 @@ div id="answer-#{answer.id}"
   .links  
     - if answer.links.any?
       ul
-        - answer.links.each do |l|
-          li = link_to l.name, l.url       
+        - answer.links.each do |link|
+          - if link.gist?
+            div.gist-content data-gist-id=link.gist_url
+          - else
+            li = link_to link.name, link.url      
 
   / - Edit an answer -
   = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
