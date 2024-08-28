@@ -13,7 +13,7 @@ RSpec.describe Link do
   it { is_expected.to allow_value('http://example.com').for(:url) }
   it { is_expected.to allow_value('https://example.com').for(:url) }
 
-  context 'when question has links' do
+  context 'when answer has links' do
     describe 'link.gist?' do
       it 'return true when a link referces to the gist' do
         expect(gist_url_answer.gist?).to be true
@@ -23,6 +23,20 @@ RSpec.describe Link do
     describe 'link.gist_url' do
       it 'return ID from link.url' do
         expect(gist_url_answer.gist_url).to eq '514a5411559d7e42a2d1c74ad56f18bf'
+      end
+    end
+  end
+
+  context 'when question has links' do
+    describe 'link.gist?' do
+      it 'return true when a link referces to the gist' do
+        expect(gist_url_question.gist?).to be true
+      end
+    end
+
+    describe 'link.gist_url' do
+      it 'return ID from link.url' do
+        expect(gist_url_question.gist_url).to eq '514a5411559d7e42a2d1c74ad56f18bf'
       end
     end
   end
