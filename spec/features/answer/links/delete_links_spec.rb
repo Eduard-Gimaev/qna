@@ -15,7 +15,7 @@ feature 'User can edit links in the answer', '
       sign_in(user)
       visit question_path(question)
       click_on 'Edit an answer'
-      expect(page).to have_link 'Link_name', href: 'Link_URL'
+      expect(page).to have_link 'Link_name', href: 'http://google.com'
 
       click_on 'x'
       click_on 'Save'

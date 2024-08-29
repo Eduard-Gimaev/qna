@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
-  before_action :authenticate_user!
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update mark_as_best destroy]
 
@@ -43,6 +42,8 @@ class AnswersController < ApplicationController
   end
 
   def answer_params
-    params.require(:answer).permit(:body, files: [], links_attributes:%i[name url]).merge(user_id: current_user.id)
+    params.require(:answer).permit(:body, files: [],
+                                    links_attributes:%i[name url]
+                                    ).merge(user_id: current_user.id)
   end
 end

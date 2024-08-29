@@ -1,7 +1,6 @@
 # frozen_string_literal: true
-
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :find_question, only: %i[show edit update]
 
   def index
@@ -17,6 +16,7 @@ class QuestionsController < ApplicationController
   def new
     @question = Question.new
     @question.links.new
+    @question.build_reward
   end
 
   def edit; end
@@ -24,6 +24,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.new(question_params)
     if @question.save
+      
       redirect_to @question
     else
       render :new
@@ -50,6 +51,8 @@ class QuestionsController < ApplicationController
   # rubocop:enable Naming/MemoizedInstanceVariableName
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [], links_attributes:%i[name url _destroy]).merge(user_id: current_user.id)
+    params.require(:question).permit(:title, :body, files: [], 
+                                      links_attributes:%i[name url _destroy],
+                                      reward_attributes:%i[title image]).merge(user_id: current_user.id)
   end
 end

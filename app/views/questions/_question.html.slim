@@ -27,7 +27,11 @@ table border = "1"
             div.gist-content data-gist-id=link.gist_url
           - else
             li = link_to link.name, link.url
-
+.rewards
+    ul
+      - if question.reward
+        = image_tag(question.reward.image)            
+        li = question.reward.title
 / - Edit a question -
 = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
     p 
