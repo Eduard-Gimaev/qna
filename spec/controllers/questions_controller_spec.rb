@@ -25,7 +25,8 @@ RSpec.describe QuestionsController do
   end
 
   describe 'GET #show' do
-    let(:answers) { create_list(:answer, 3, question: question, user: user) }
+    let(:answers) { create_list(:answer, 3, question:, user:) }
+
     before do
       login(user)
       get :show, params: { id: question }

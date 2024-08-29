@@ -22,10 +22,9 @@ feature 'User can add reward to question', '
         attach_file 'Image', "#{Rails.root}/app/assets/images/reward.png"
       end
       click_on 'Ask'
-      
+
       expect(page).to have_content 'The best answer'
       expect(page).to have_css("img[src*='reward.png']")
     end
   end
 end
-  

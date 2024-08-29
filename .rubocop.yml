@@ -43,6 +43,8 @@ Rails/FilePath:
     - 'spec/features/question/create_spec.rb'
     - 'spec/features/question/reward/add_reward_spec.rb'
     - 'spec/controllers/rewards_controller_spec.rb'
+    - 'spec/features/reward/add_reward_to_question_spec.rb'
+    - 'spec/features/reward/index_reward_spec.rb'
 
 Rails/BulkChangeTable:
   Enabled: false

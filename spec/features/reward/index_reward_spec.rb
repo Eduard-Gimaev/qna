@@ -7,25 +7,24 @@ feature 'User can view all his rewards', '
 ' do
   given!(:user) { create(:user) }
   given!(:user2) { create(:user) }
-  given!(:question) { create(:question, user: user) }
+  given!(:question) { create(:question, user:) }
   given!(:reward) do
     create(:reward,
            image: fixture_file_upload("#{Rails.root}/app/assets/images/reward.png"),
            question_id: question.id)
   end
-  given!(:answer) { create(:answer, question:, user: user) }
+  given!(:answer) { create(:answer, question:, user:) }
 
-
-  scenario 'Authenticated user earn reward', :js do 
+  scenario 'Authenticated user earns a reward', :js do
     sign_in(user)
     visit question_path(question)
 
     within "#answer-#{answer.id}" do
-        expect(page).to have_no_content 'BEST'
-        click_on 'The best answer'
-        expect(page).to have_content 'BEST'
-      end
-      
+      expect(page).to have_no_content 'BEST'
+      click_on 'The best answer'
+      expect(page).to have_content 'BEST'
+    end
+
     visit questions_path
     click_on 'My rewards'
 

@@ -26,7 +26,7 @@ RSpec.describe LinksController do
           login(user2)
           delete :destroy, params: { id: question.links.first }, format: :js
           question.reload
-          expect { delete :destroy, params: { id: question_link }, format: :js }.to change(Link, :count).by(0)
+          expect { delete :destroy, params: { id: question_link }, format: :js }.not_to change(Link, :count)
         end
       end
     end
@@ -47,7 +47,7 @@ RSpec.describe LinksController do
         login(user2)
         delete :destroy, params: { id: answer.links.first }, format: :js
         answer.reload
-        expect { delete :destroy, params: { id: question_link }, format: :js }.to change(Link, :count).by(0)
+        expect { delete :destroy, params: { id: question_link }, format: :js }.not_to change(Link, :count)
       end
     end
   end
