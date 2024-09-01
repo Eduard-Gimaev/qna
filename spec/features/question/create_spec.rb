@@ -12,14 +12,13 @@ feature 'User can create question', "
   describe 'Authenticated user' do
     background do
       sign_in(user)
-
       visit questions_path
       click_on 'Ask a new question'
     end
 
     scenario 'asks a question' do
-      fill_in 'Title', with: 'Title of the question'
-      fill_in 'Body', with: 'Text of the question'
+      fill_in 'question[title]', with: 'Title of the question'
+      fill_in 'question[body]', with: 'Text of the question'
       click_on 'Ask'
 
       expect(page).to have_content 'Title of the question'
@@ -27,8 +26,8 @@ feature 'User can create question', "
     end
 
     scenario 'asks a question with attached file' do
-      fill_in 'Title', with: 'Title of the question'
-      fill_in 'Body', with: 'Text of the question'
+      fill_in 'question[title]', with: 'Title of the question'
+      fill_in 'question[body]', with: 'Text of the question'
       attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Ask'
 

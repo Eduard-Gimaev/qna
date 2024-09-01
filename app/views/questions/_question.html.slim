@@ -1,33 +1,58 @@
 .question-errors
   = render 'shared/errors', resource: question
 
-div class="card mb-3 mt-3" style="max-width: 18rem"
-  div class="card-header text-center" 
-    tr = question.title
-    tr = " | "
-    tr = question.body
-
+table border = "1"
+  thead
+    tr
+      th Title
+      th Question
+      th colspan="2" Action
+  tbody
+    tr 
+      th = question.title 
+      th = question.body 
+      - if user_signed_in? && current_user&.author?(find_question)
+        th = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
+        th = button_to 'Delete a question', question_path(find_question), method: :delete      
+.attachments
   - if question.files.attached?
-    - question.files.each do |file|
-      p = link_to file.filename.to_s, url_for(file)
+    ul
+      - question.files.each do |file| 
+        li = link_to file.filename.to_s, url_for(file)
+.links 
+  - if question.links.any?
+    ul
+      - question.links.each do |link|
+          - if link.gist?
+            div.gist-content data-gist-id=link.gist_url
+          - else
+            li = link_to link.name, link.url
+.rewards
+    ul
+      - if question.reward
+        = image_tag(question.reward.image)            
+        li = question.reward.title
+/ - Edit a question -
+= form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
+    p 
+      = f.label :title, 'Question title'
+      = f.text_field :title
+    p
+      = f.label :body, 'Question body'
+      = f.text_area :body
+    p
+      = f.label :files
+      = f.file_field :files, multiple: true, direct_upload: true
+    p
+      - question.files.each do |file|
+        div id="attachment-#{file.id}"
+          = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
+    .links
+      = link_to_add_association 'add link', f, :links   
+    .links_remove 
+      - question.links.each do |link|
+        div id="link-#{link.id}"
+          = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
 
-  - if user_signed_in? && current_user&.author?(find_question)
-      = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
-      = button_to 'Delete a question', question_path(find_question), method: :delete
-
-      = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
-        p
-          = f.label :title, 'Question title'
-          = f.text_field :title
-        p
-          = f.label :body, 'Question body'
-          = f.text_area :body
-        p
-          = f.label :files
-          = f.file_field :files, multiple: true, direct_upload: true
-        p
-          - question.files.each do |file|
-            div id="attachment-#{file.id}"
-              = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
-
-        p = f.submit 'Save'
+    p = f.submit 'Save'
+    p = '______________________________________________'

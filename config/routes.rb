@@ -11,7 +11,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :attachments, only: [:destroy]
+  resources :users, shallow: true do
+    resources :rewards, only: %i[index]
+  end
+
+  resources :attachments, only: %i[destroy]
+  resources :links, only: %i[destroy]
+  resources :rewards, only: %i[index destroy]
 
   root to: 'questions#index'
 end

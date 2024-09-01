@@ -32,14 +32,28 @@ Metrics/MethodLength:
 Style/Documentation:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
 Rails/FilePath:
-  EnforcedStyle: arguments
+  EnforcedStyle: arguments  
+  Exclude:
+    - 'spec/features/answer/create_spec.rb'
+    - 'spec/features/answer/edit_spec.rb'
+    - 'spec/features/question/create_spec.rb'
+    - 'spec/features/question/reward/add_reward_spec.rb'
+    - 'spec/controllers/rewards_controller_spec.rb'
+    - 'spec/features/reward/add_reward_to_question_spec.rb'
+    - 'spec/features/reward/index_reward_spec.rb'
 
 Rails/BulkChangeTable:
   Enabled: false
 
 RSpec/MultipleExpectations:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 6
 
 RSpec/ExampleLength:
   Enabled: false
@@ -52,3 +66,7 @@ RSpec/VerifiedDoubles:
 
 RSpec/LetSetup:
   Enabled: false
+
+RSpec/IndexedLet:
+  Exclude:
+    - 'spec/controllers/rewards_controller_spec.rb'

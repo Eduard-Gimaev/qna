@@ -25,7 +25,6 @@ feature 'User can edit his question', "
         within '.question' do
           fill_in 'question[title]', with: 'edited title'
           fill_in 'question[body]', with: 'edited body'
-          # attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
 
           click_on 'Save'
 
@@ -34,7 +33,6 @@ feature 'User can edit his question', "
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
           expect(page).to have_no_css 'textarea'
-          # expect(page).to have_link 'spec_helper.rb'
         end
       end
 

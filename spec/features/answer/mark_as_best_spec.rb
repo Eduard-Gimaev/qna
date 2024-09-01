@@ -18,9 +18,9 @@ feature 'User can choose the best answer', "
       visit question_path(question)
 
       within "#answer-#{answer.id}" do
-        expect(page).to have_no_content 'the best answer!'
+        expect(page).to have_no_content 'BEST'
         click_on 'The best answer'
-        expect(page).to have_content 'the best answer!'
+        expect(page).to have_content 'BEST'
       end
     end
 

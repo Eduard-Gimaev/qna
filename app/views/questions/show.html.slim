@@ -1,13 +1,14 @@
 .div 
   = link_to 'Back', questions_path
-  
-.question
-  p = render @question
 
+.question
+  = render @question
+
+p = '____________________________________________________________'
+.answers
+  = render @answers  
+p = '____________________________________________________________'
 .new-answer
   = render 'answers/form'
-p = '______________________________'
+
     
-.answers
-  h3 Answers
-  = render @answers

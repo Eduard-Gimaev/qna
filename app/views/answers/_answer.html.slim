@@ -1,27 +1,45 @@
 div id="answer-#{answer.id}"
-  p
-    = answer.best ? "#{answer.body} - the best answer!" : "#{answer.body}"
+  table border = "1"
+      tr 
+        th colspan="3" = answer.best ? "#{answer.body} - BEST!!!" : "#{answer.body}"
+      tr
+        - if user_signed_in? && answer.body && current_user&.author?(answer)
+          th = button_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+          th = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
+          th = button_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
+  .attachments
+    - if answer.files.attached?
+    ul
+      - answer.files.each do |file| 
+        li = link_to file.filename.to_s, url_for(file)
+  .links  
+    - if answer.links.any?
+      ul
+        - answer.links.each do |link|
+          - if link.gist?
+            div.gist-content data-gist-id=link.gist_url
+          - else
+            li = link_to link.name, link.url      
 
-  - if user_signed_in? && answer.body && current_user&.author?(answer)
-      = button_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-      = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
-      = button_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
-    
-      = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |file|
-        p
-          = file.label :body, 'Your answer'
-          = file.text_area :body
-        p
-          = file.label :files
-          = file.file_field :files, multiple: true, direct_upload: true
-        p
-        - answer.files.each do |file|
-          div id="attachment-#{file.id}"
-            = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
-
-        = file.submit 'Save'
-        
-  - if answer.files.attached?
-      - answer.files.each do |file|
-        p = link_to file.filename.to_s, url_for(file)
-      p = '_______________________'
+  / - Edit an answer -
+  = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
+    h5 Adding an answer:
+    p
+      = f.label :body, 'Edit your answer here:'
+      br
+      = f.text_area :body
+    p
+      = f.label :files, 'Edit your attachments here:'
+      br
+      = f.file_field :files, multiple: true, direct_upload: true
+    p
+    - answer.files.each do |file|
+      div id="attachment-#{file.id}"
+        = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
+    .links
+      = link_to_add_association 'add link', f, :links   
+    .links_remove 
+      - answer.links.each do |link|
+        div id="link-#{link.id}"
+          = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
+    = f.submit 'Save'
