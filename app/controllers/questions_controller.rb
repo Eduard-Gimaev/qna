@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
+  include Voted
+
   skip_before_action :authenticate_user!, only: %i[index show]
   before_action :find_question, only: %i[show edit update]
 
@@ -42,7 +44,6 @@ class QuestionsController < ApplicationController
   end
 
   private
-
   # rubocop:disable Naming/MemoizedInstanceVariableName
   def find_question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new

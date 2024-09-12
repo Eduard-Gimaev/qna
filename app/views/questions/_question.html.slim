@@ -1,16 +1,12 @@
 .question-errors
   = render 'shared/errors', resource: question
 
-table border = "1"
+table border = "0"
   thead
     tr
-      th Title
-      th Question
-      th colspan="2" Action
+      th colspan="2" = "#{question.title}: #{question.body}" 
   tbody
     tr 
-      th = question.title 
-      th = question.body 
       - if user_signed_in? && current_user&.author?(find_question)
         th = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
         th = button_to 'Delete a question', question_path(find_question), method: :delete      
@@ -32,6 +28,12 @@ table border = "1"
       - if question.reward
         = image_tag(question.reward.image)            
         li = question.reward.title
+.voting 
+  tr 
+    - if user_signed_in?
+      th 
+      th 
+
 / - Edit a question -
 = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
     p 
@@ -56,3 +58,11 @@ table border = "1"
 
     p = f.submit 'Save'
     p = '______________________________________________'
+
+- if user_signed_in?
+  = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: @question.id }
+  = " / "
+  = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
+  = " :: "
+  = question.rating
+  div id="question-error-#{question.id}"
