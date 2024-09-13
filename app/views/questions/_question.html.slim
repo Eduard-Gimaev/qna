@@ -60,7 +60,7 @@ table border = "0"
     p = '______________________________________________'
 
 - if user_signed_in?
-  = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: @question.id }
+  = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
   = " / "
   = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
   = " :: "

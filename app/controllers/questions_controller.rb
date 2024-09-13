@@ -25,8 +25,10 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
+    @question = Question.new(question_params)
+    byebug
     if @question.save
+      byebug
 
       redirect_to @question
     else

@@ -2,8 +2,8 @@ require 'rails_helper'
 
 shared_examples 'voted' do
   let!(:author) { create(:user) }
-  let!(:resource) { create(described_class.name.underscore.split("_")[0][0..-2].to_sym, user: author) }
   let!(:user) { create(:user) }
+  let!(:resource) { create(described_class.controller_name.classify.downcase.to_sym, user: author) }
   
   describe 'PATCH #like' do
     before do
