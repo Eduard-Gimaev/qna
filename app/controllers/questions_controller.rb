@@ -26,10 +26,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    byebug
     if @question.save
-      byebug
-
       redirect_to @question
     else
       render :new

@@ -3,7 +3,7 @@ require 'rails_helper'
 shared_examples 'voted' do
   let!(:author) { create(:user) }
   let!(:user) { create(:user) }
-  let!(:resource) { create(described_class.controller_name.classify.downcase.to_sym, user: author) }
+  let!(:resource) { create(described_class.controller_name.classify.downcase.to_sym) }
   
   describe 'PATCH #like' do
     before do
