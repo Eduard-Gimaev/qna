@@ -59,10 +59,11 @@ table border = "0"
     p = f.submit 'Save'
     p = '______________________________________________'
 
-- if user_signed_in?
-  = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
-  = " / "
-  = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
-  = " :: "
-  = question.rating
-  div id="question-error-#{question.id}"
+.voting
+  - if user_signed_in?
+    = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
+    = " / "
+    = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
+    = " :: "
+    = question.rating
+div id="question-error-#{@question.id}"

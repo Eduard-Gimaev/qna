@@ -21,6 +21,6 @@ module Votable
   def rating
     likes = self.votes.where(vote_value: 'like').count
     dislikes = self.votes.where(vote_value: 'dislike').count
-    likes - dislikes
+    rating = likes - dislikes
   end
 end

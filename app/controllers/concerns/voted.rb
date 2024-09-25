@@ -7,7 +7,6 @@ module Voted
 
   def like
     prepare_vote(params[:action])
-
   end
 
   def dislike
