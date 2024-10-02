@@ -19,8 +19,9 @@ feature 'User can vote for a question ', %q{
       scenario 'tries to Like' do
         within '.question' do
           expect(page).to have_content "0"
+          page.driver.header 'Accept', 'application/json' 
           click_on 'Like'
-
+          expect(page.response_headers['Content-Type']).to eq 'application/json; charset=utf-8'
           expect(page).to have_content "1"
         end
       end
