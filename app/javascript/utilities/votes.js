@@ -1,4 +1,5 @@
 $(document).on('turbolinks:load', function(){
+  
     function checkVoting() {
         $('a.voting').on('ajax:success', function(e) {
             var resource = $(this).data('resource')

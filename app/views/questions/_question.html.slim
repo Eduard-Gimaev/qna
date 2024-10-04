@@ -65,5 +65,5 @@ table border = "0"
     = " / "
     = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
     = " :: "
-    = question.rating
-div id="question-error-#{@question.id}"
+    span id="question-rating-#{question.id}" = question.rating
+div id="question-error-#{question.id}"
