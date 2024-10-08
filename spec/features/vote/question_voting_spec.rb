@@ -23,7 +23,8 @@ feature 'User can vote for a question', %q{
           expect(page).to have_content "1"
         end
       end
-      scenario 'tries to like again', :js do
+
+      scenario 'tries to like again' do
         within '.question' do
           click_on 'Like'
           expect(page).to have_content "1"
@@ -31,14 +32,16 @@ feature 'User can vote for a question', %q{
           expect(page).to have_content "1" # Assuming user can't like twice
         end
       end
-      scenario 'tries to dislike', :js do
+
+      scenario 'tries to dislike' do
         within '.question' do
           expect(page).to have_content "0"
           click_on 'Dislike'
           expect(page).to have_content "-1"
         end
       end
-      scenario 'tries to dislike again', :js do
+
+      scenario 'tries to dislike again' do
         within '.question' do
           click_on 'Dislike'
           expect(page).to have_content "-1"
@@ -47,25 +50,28 @@ feature 'User can vote for a question', %q{
         end
       end
     end
+
     context 'when author of the question' do
       background do
         sign_in(author)
         visit question_path(question)
       end
 
-      scenario 'tries to like his own question', :js do
+      scenario 'tries to like his own question' do
         within '.question' do
           expect(page).to have_content "0"
           click_on 'Like'
-          expect(page).to have_content "0" # Assuming author can't vote for his own question
+          expect(page).to have_content "0"
+          expect(page).to have_content "You can't vote for your own question"
         end
       end
 
-      scenario 'tries to dislike his own question', :js do
+      scenario 'tries to dislike his own question' do
         within '.question' do
           expect(page).to have_content "0"
           click_on 'Dislike'
-          expect(page).to have_content "0" # Assuming author can't vote for his own question
+          expect(page).to have_content "0"
+          expect(page).to have_content "You can't vote for your own question"
         end
       end
     end

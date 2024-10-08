@@ -1,7 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController do
-  it_behaves_like 'voted'
+  it_behaves_like 'voted' do
+    let(:entity) { answer }
+    let(:entity_class) { Answer }
+  end
 
   let(:user) { create(:user) }
   let!(:user2) { create(:user) }

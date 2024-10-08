@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController do
-  # it_behaves_like 'public_index'
   it_behaves_like 'voted'
 
   let(:user) { create(:user) }

@@ -31,7 +31,7 @@ module Voted
         end
       else
         @entity.make_vote(current_user, value)
-        format.json { render json: @entity.rating }
+         format.json { render json: @entity.rating }
       end
     end
   end

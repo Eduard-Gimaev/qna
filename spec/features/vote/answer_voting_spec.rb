@@ -25,7 +25,7 @@ feature 'User can vote for an answer', %q{
         end
       end
 
-      scenario 'tries to like again', :js do
+      scenario 'tries to like again' do
          within '.answers' do
           click_on 'Like'
           expect(page).to have_content "1"
@@ -34,7 +34,7 @@ feature 'User can vote for an answer', %q{
         end
       end
 
-      scenario 'tries to dislike', :js do
+      scenario 'tries to dislike' do
          within '.answers' do
           expect(page).to have_content "0"
           click_on 'Dislike'
@@ -42,7 +42,7 @@ feature 'User can vote for an answer', %q{
         end
       end
 
-      scenario 'tries to dislike again', :js do
+      scenario 'tries to dislike again' do
          within '.answers' do
           click_on 'Dislike'
           expect(page).to have_content "-1"
@@ -58,7 +58,7 @@ feature 'User can vote for an answer', %q{
         visit question_path(question)
       end
 
-      scenario 'tries to like his own answer', :js do
+      scenario 'tries to like his own answer' do
          within '.answers' do
           expect(page).to have_content "0"
           click_on 'Like'
@@ -66,7 +66,7 @@ feature 'User can vote for an answer', %q{
         end
       end
 
-      scenario 'tries to dislike his own answer', :js do
+      scenario 'tries to dislike his own answer' do
         within '.answers' do
           expect(page).to have_content "0"
           click_on 'Dislike'
