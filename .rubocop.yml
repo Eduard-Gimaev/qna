@@ -20,10 +20,12 @@ Rails/ThreeStateBooleanColumn:
 Layout/LineLength:
   Exclude:
   - spec/**/*.rb
+  - 'config/initializers/*'
 
 Metrics/BlockLength:
   Exclude:
   - spec/**/*.rb
+  - 'config/environments/*'
 
 Metrics/AbcSize:
   Max: 24

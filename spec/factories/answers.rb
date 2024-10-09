@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 FactoryBot.define do
   factory :answer do
     body { 'AnswerBody' }
-    association :question
-    association :user
+    question
+    user
 
     trait :invalid do
       body { nil }

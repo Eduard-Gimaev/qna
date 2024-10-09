@@ -10,9 +10,10 @@ RSpec.shared_examples 'voted' do
       login(user)
       post :like, params: { id: resource.id }, format: :json
     end
+
     context 'when user is not the author of the entity' do
       it 'creates a vote(like)' do
-        expect(resource.votes.count).to eq 1 
+        expect(resource.votes.count).to eq 1
       end
 
       it 'cancels a created vote(like)' do
@@ -27,6 +28,7 @@ RSpec.shared_examples 'voted' do
       login(user)
       post :dislike, params: { id: resource.id }, format: :json
     end
+
     context 'when user is not the author of the entity' do
       it 'creates a vote(dislike)' do
         expect(resource.votes.count).to eq 1

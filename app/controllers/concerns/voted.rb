@@ -1,8 +1,8 @@
-module Voted 
+module Voted
   extend ActiveSupport::Concern
-  
+
   included do
-    before_action :find_entity, only: [:like, :dislike]
+    before_action :find_entity, only: %i[like dislike]
   end
 
   def like
@@ -31,7 +31,7 @@ module Voted
         end
       else
         @entity.make_vote(current_user, value)
-         format.json { render json: @entity.rating }
+        format.json { render json: @entity.rating }
       end
     end
   end

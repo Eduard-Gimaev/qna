@@ -6,21 +6,21 @@ module Votable
   end
 
   def make_vote(user, value)
-    existing_vote = self.votes.find_by(user: user, votable: self)
+    existing_vote = votes.find_by(user:, votable: self)
 
     if existing_vote.nil?
-      self.votes.create(user: user, vote_value: value, votable: self)
+      votes.create(user:, vote_value: value, votable: self)
     elsif existing_vote.vote_value == value
       existing_vote.destroy
     else
       existing_vote.destroy
-      self.votes.create(user: user, vote_value: value, votable: self)
+      votes.create(user:, vote_value: value, votable: self)
     end
   end
 
   def rating
-    likes = self.votes.where(vote_value: 'like').count
-    dislikes = self.votes.where(vote_value: 'dislike').count
-    rating = likes - dislikes
+    likes = votes.where(vote_value: 'like').count
+    dislikes = votes.where(vote_value: 'dislike').count
+    likes - dislikes
   end
 end
