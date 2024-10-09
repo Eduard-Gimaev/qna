@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 class QuestionsController < ApplicationController
-  skip_before_action :authenticate_user!, only: %i[index show]
+  include PublicAccess
+  include Voted
+
+  # skip_before_action :authenticate_user!, only: %i[index show]
   before_action :find_question, only: %i[show edit update]
 
   def index
@@ -23,9 +26,8 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = current_user.questions.new(question_params)
+    @question = Question.new(question_params)
     if @question.save
-
       redirect_to @question
     else
       render :new
@@ -42,7 +44,6 @@ class QuestionsController < ApplicationController
   end
 
   private
-
   # rubocop:disable Naming/MemoizedInstanceVariableName
   def find_question
     @question ||= params[:id] ? Question.with_attached_files.find(params[:id]) : Question.new

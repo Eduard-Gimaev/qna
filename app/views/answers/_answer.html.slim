@@ -1,5 +1,5 @@
 div id="answer-#{answer.id}"
-  table border = "1"
+  table border = "0"
       tr 
         th colspan="3" = answer.best ? "#{answer.body} - BEST!!!" : "#{answer.body}"
       tr
@@ -43,3 +43,12 @@ div id="answer-#{answer.id}"
         div id="link-#{link.id}"
           = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
     = f.submit 'Save'
+
+.voting
+  - if user_signed_in?
+    = link_to 'Like', like_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+    = " / "
+    = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+    = " :: "
+    span id="answer-rating-#{answer.id}" = answer.rating
+div id="answer-error-#{answer.id}"

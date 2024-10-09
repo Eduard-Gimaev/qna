@@ -1,10 +1,11 @@
 .header class='container'
   .div class='row'
     .nav class='col'
-      -if user_signed_in?
-        = button_to 'Log Out', destroy_user_session_path, method: :delete
-        = link_to 'My rewards', user_rewards_path(current_user)
-      -else
-          p = 'You need to sign in to write question'
-          = button_to 'Log In', new_user_session_path
-  
+      - if user_signed_in?
+        p
+          = button_to 'Log Out', destroy_user_session_path, method: :delete
+          | #{current_user.email.split('@').first}
+        p = link_to ' My rewards ', user_rewards_path(current_user)
+      - else
+        p = 'You need to sign in to write question'
+        = button_to 'Log In', new_user_session_path

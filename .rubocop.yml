@@ -18,10 +18,12 @@ Rails/ThreeStateBooleanColumn:
     - 'db/migrate/20240803184522_add_best_to_answers.rb'  
 
 Layout/LineLength:
-  Max: 154
+  Exclude:
+  - spec/**/*.rb
 
 Metrics/BlockLength:
-  Max: 26
+  Exclude:
+  - spec/**/*.rb
 
 Metrics/AbcSize:
   Max: 24
