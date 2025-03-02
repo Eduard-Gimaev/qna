@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   concern :votable do
     member do
-      post :like
-      post :dislike
+      post 'like'
+      post 'dislike'
     end
   end
 
