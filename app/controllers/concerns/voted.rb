@@ -6,11 +6,11 @@ module Voted
   end
 
   def like
-    prepare_vote(params[:action])
+    render_vote(params[:action])
   end
 
   def dislike
-    prepare_vote(params[:action])
+    render_vote(params[:action])
   end
 
   private
@@ -23,14 +23,14 @@ module Voted
     @entity = model_klass.find(params[:id])
   end
 
-  def prepare_vote(value)
+  def render_vote(vote_type)
     respond_to do |format|
       if current_user.author?(@entity)
         format.json do
           render json: { error: "You can't vote for your own #{model_klass.to_s.downcase}" }
         end
       else
-        @entity.make_vote(current_user, value)
+        @entity.make_vote(current_user, vote_type)
         format.json { render json: @entity.rating }
       end
     end

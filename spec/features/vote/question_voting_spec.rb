@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'byebug'
 
 feature 'User can vote for a question', '
   In order to give personal attitude
@@ -24,15 +25,6 @@ feature 'User can vote for a question', '
         end
       end
 
-      scenario 'tries to like again' do
-        within '.question' do
-          click_on 'Like'
-          expect(page).to have_content '1'
-          click_on 'Like'
-          expect(page).to have_content '1'
-        end
-      end
-
       scenario 'tries to dislike' do
         within '.question' do
           expect(page).to have_content '0'
@@ -41,13 +33,12 @@ feature 'User can vote for a question', '
         end
       end
 
-      scenario 'tries to dislike again' do
-        within '.question' do
-          click_on 'Dislike'
-          expect(page).to have_content '-1'
-          click_on 'Dislike'
-          expect(page).to have_content '-1' # Assuming user can't dislike twice
-        end
+      scenario 'destroys existing vote if the same vote type is given' do
+        question.make_vote(non_author, 'like')
+        expect(question.votes.count).to eq 1
+
+        question.make_vote(non_author, 'like')
+        expect(question.votes.count).to eq 0
       end
     end
 

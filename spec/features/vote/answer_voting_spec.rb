@@ -25,15 +25,6 @@ feature 'User can vote for an answer', '
         end
       end
 
-      scenario 'tries to like again' do
-        within '.answers' do
-          click_on 'Like'
-          expect(page).to have_content '1'
-          click_on 'Like'
-          expect(page).to have_content '1' # Assuming user can't like twice
-        end
-      end
-
       scenario 'tries to dislike' do
         within '.answers' do
           expect(page).to have_content '0'
@@ -42,13 +33,12 @@ feature 'User can vote for an answer', '
         end
       end
 
-      scenario 'tries to dislike again' do
-        within '.answers' do
-          click_on 'Dislike'
-          expect(page).to have_content '-1'
-          click_on 'Dislike'
-          expect(page).to have_content '-1' # Assuming user can't dislike twice
-        end
+      scenario 'destroys existing vote if the same vote type is given' do
+        answer.make_vote(non_author, 'like')
+        expect(answer.votes.count).to eq 1
+
+        answer.make_vote(non_author, 'like')
+        expect(answer.votes.count).to eq 0
       end
     end
 

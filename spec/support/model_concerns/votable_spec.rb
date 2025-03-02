@@ -28,11 +28,11 @@ shared_examples_for 'votable' do
       resource.make_vote(group_five[0], 'dislike')
       resource.reload
       expect(resource.votes.count).to eq 1
-      expect(resource.votes[0].vote_value).to eq 'dislike'
+      expect(resource.votes[0].vote_type).to eq 'dislike'
       resource.make_vote(group_five[0], 'like')
       resource.reload
       expect(resource.votes.count).to eq 1
-      expect(resource.votes[0].vote_value).to eq 'like'
+      expect(resource.votes[0].vote_type).to eq 'like'
     end
   end
 

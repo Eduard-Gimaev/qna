@@ -6,3 +6,12 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+namespace :cleanup do
+  desc 'Clear logs and tmp files'
+  task clear: :environment do
+    Rake::Task['log:clear'].invoke
+    Rake::Task['tmp:clear'].invoke
+  end
+end
+#bin/rails cleanup:clear

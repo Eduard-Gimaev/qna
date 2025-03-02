@@ -5,22 +5,20 @@ module Votable
     has_many :votes, as: :votable, dependent: :destroy
   end
 
-  def make_vote(user, value)
+  def make_vote(user, vote_type)
+    vote_type = Vote.vote_types[vote_type] if vote_type.is_a?(String)
     existing_vote = votes.find_by(user:, votable: self)
 
     if existing_vote.nil?
-      votes.create(user:, vote_value: value, votable: self)
-    elsif existing_vote.vote_value == value
+      votes.create(user: user, vote_type: vote_type, votable: self)
+    elsif existing_vote.vote_type == Vote.vote_types.key(vote_type)
       existing_vote.destroy
     else
-      existing_vote.destroy
-      votes.create(user:, vote_value: value, votable: self)
+      existing_vote.update(vote_type: vote_type)
     end
   end
 
   def rating
-    likes = votes.where(vote_value: 'like').count
-    dislikes = votes.where(vote_value: 'dislike').count
-    likes - dislikes
+    votes.sum(:vote_type)
   end
 end
