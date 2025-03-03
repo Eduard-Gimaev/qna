@@ -5,7 +5,7 @@ feature 'User can add reward to question', '
   As an authenticated user
   I would like to be able to add reward
 ' do
-  given(:user) { create(:user) }
+  given!(:user) { create(:user) }
   given!(:question) { create(:question, user:) }
 
   describe 'Authenticated user', :js do

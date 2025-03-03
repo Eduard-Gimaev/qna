@@ -5,11 +5,11 @@ feature 'User can add links to question', '
   As an authenticated user
   I would like to be able to add links
 ' do
-  given(:user) { create(:user) }
+  given!(:user) { create(:user) }
   given!(:question) { create(:question, user:) }
-  given(:google_url) { 'https://google.com' }
-  given(:yandex_url) { 'https://ya.ru' }
-  given(:gist_url) { 'https://gist.github.com/Eduard-Gimaev/514a5411559d7e42a2d1c74ad56f18bf' }
+  given!(:google_url) { 'https://google.com' }
+  given!(:yandex_url) { 'https://ya.ru' }
+  given!(:gist_url) { 'https://gist.github.com/Eduard-Gimaev/514a5411559d7e42a2d1c74ad56f18bf' }
 
   describe 'Authenticated user', :js do
     background do
