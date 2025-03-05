@@ -1,7 +1,7 @@
 div.comment
-  p.comment-body
+  .comment-body
     = comment.body
-    p.comment-meta style="color: lightgray; font-size: smaller;"
+    .comment-meta
       | #{comment.user.email} on #{comment.created_at.strftime('%Y-%m-%d %H:%M')}
   - if user_signed_in? && comment.body && current_user&.author?(comment)
     div.crud-buttons

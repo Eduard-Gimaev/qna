@@ -8,8 +8,9 @@
   - if @question.comments.any?
     div id='comments-list' 
     = render @question.comments
-  / .new-comment
-  /   = render 'comments/form', commentable: @question  
+    p = '____________________________________________________________'
+.new-comment-question
+  = render 'comments/form', commentable: @question  
 
 .answers
   - if @answers.any?
