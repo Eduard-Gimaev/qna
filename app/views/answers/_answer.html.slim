@@ -19,7 +19,16 @@ div id="answer-#{answer.id}"
           - if link.gist?
             div.gist-content data-gist-id=link.gist_url
           - else
-            li = link_to link.name, link.url      
+            li = link_to link.name, link.url  
+  .voting
+  - if user_signed_in?
+    = link_to 'Like', like_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+    = " / "
+    = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+    = " :: "
+    span id="answer-rating-#{answer.id}" = answer.rating
+    
+div id="answer-error-#{answer.id}"
 
   / - Edit an answer -
   = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
@@ -43,12 +52,3 @@ div id="answer-#{answer.id}"
         div id="link-#{link.id}"
           = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
     = f.submit 'Save'
-
-.voting
-  - if user_signed_in?
-    = link_to 'Like', like_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
-    = " / "
-    = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
-    = " :: "
-    span id="answer-rating-#{answer.id}" = answer.rating
-div id="answer-error-#{answer.id}"

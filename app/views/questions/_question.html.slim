@@ -1,69 +1,69 @@
-.question-errors
-  = render 'shared/errors', resource: question
+- if local_assigns[:table_headers]
+  tr
+    th = question.title
+    td = link_to question.body, question
+- else
+  .question-errors
+    = render 'shared/errors', resource: question
 
-table border = "0"
-  thead
-    tr
-      th colspan="2" = "#{question.title}: #{question.body}" 
-  tbody
-    tr 
-      - if user_signed_in? && current_user&.author?(find_question)
-        th = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
-        th = button_to 'Delete a question', question_path(find_question), method: :delete      
-.attachments
-  - if question.files.attached?
-    ul
-      - question.files.each do |file| 
-        li = link_to file.filename.to_s, url_for(file)
-.links 
-  - if question.links.any?
-    ul
-      - question.links.each do |link|
-          - if link.gist?
-            div.gist-content data-gist-id=link.gist_url
-          - else
-            li = link_to link.name, link.url
-.rewards
-    ul
-      - if question.reward
-        = image_tag(question.reward.image)            
-        li = question.reward.title
-.voting 
-  tr 
+  table border = "0"
+    thead
+      tr
+        th colspan="2" = "#{question.title}: #{question.body}" 
+    tbody
+      tr 
+        - if user_signed_in? && current_user&.author?(find_question)
+          th = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
+          th = button_to 'Delete a question', question_path(find_question), method: :delete      
+  .attachments
+    - if question.files.attached?
+      ul
+        - question.files.each do |file| 
+          li = link_to file.filename.to_s, url_for(file)
+  .links 
+    - if question.links.any?
+      ul
+        - question.links.each do |link|
+            - if link.gist?
+              div.gist-content data-gist-id=link.gist_url
+            - else
+              li = link_to link.name, link.url
+  .rewards
+      ul
+        - if question.reward
+          = image_tag(question.reward.image)            
+          li = question.reward.title
+  .voting
     - if user_signed_in?
-      th 
-      th 
+      = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
+      = " / "
+      = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
+      = " :: "
+      span id="question-rating-#{question.id}" = question.rating
 
-/ - Edit a question -
-= form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
-    p 
-      = f.label :title, 'Question title'
-      = f.text_field :title
-    p
-      = f.label :body, 'Question body'
-      = f.text_area :body
-    p
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
-    p
-      - question.files.each do |file|
-        div id="attachment-#{file.id}"
-          = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
-    .links
-      = link_to_add_association 'add link', f, :links   
-    .links_remove 
-      - question.links.each do |link|
-        div id="link-#{link.id}"
-          = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
+  div id="question-error-#{question.id}"
 
-    p = f.submit 'Save'
-    p = '______________________________________________'
+  / - Edit a question -
+  = form_with model: question, local: false, class: 'hidden', html: { id: "edit-question-#{question.id}"} do |f|
+      p 
+        = f.label :title, 'Question title'
+        = f.text_field :title
+      p
+        = f.label :body, 'Question body'
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+      p
+        - question.files.each do |file|
+          div id="attachment-#{file.id}"
+            = (link_to 'x', attachment_path(file), method: :delete, remote: true) + "#{file.filename}"
+      .links
+        = link_to_add_association 'add link', f, :links   
+      .links_remove 
+        - question.links.each do |link|
+          div id="link-#{link.id}"
+            = (link_to "x", link_path(link), method: :delete, remote: true) + " #{link.name}"       
 
-.voting
-  - if user_signed_in?
-    = link_to 'Like', like_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
-    = " / "
-    = link_to 'Dislike', dislike_question_path(question), class: "voting", method: :post, remote: true, data: { type: :json, resource: "question", id: question.id }
-    = " :: "
-    span id="question-rating-#{question.id}" = question.rating
-div id="question-error-#{question.id}"
+      p = f.submit 'Save'
+      p = '______________________________________________'

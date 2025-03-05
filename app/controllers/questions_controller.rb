@@ -5,6 +5,7 @@ class QuestionsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: %i[index show]
   before_action :find_question, only: %i[show edit update]
+  after_action :publish_question, only: %i[create]
 
   def index
     @questions = Question.all
@@ -51,6 +52,18 @@ class QuestionsController < ApplicationController
 
   helper_method :find_question
   # rubocop:enable Naming/MemoizedInstanceVariableName
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      render_to_string(
+        partial: 'questions/question',
+        locals: { question: @question, current_user: current_user, table_headers: true }
+      )
+    )
+  end
 
   def question_params
     params.require(:question).permit(:title, :body, files: [],

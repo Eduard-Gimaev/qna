@@ -1,16 +1,14 @@
 
 p = link_to 'Ask a new question', new_question_path
 
-table border = "1"
+table border = "1" 
   thead 
     tr 
       th colspan="4" All questions:
     tr
       td Title
       td Question
-  tbody 
+  tbody id="questions-list"
     - @questions.each do |question|
-      tr
-        th = question.title
-        td= link_to question.body, question
+      = render partial: 'questions/question', locals: { question: question, table_headers: true }
         
