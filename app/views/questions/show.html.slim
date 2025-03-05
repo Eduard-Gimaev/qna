@@ -8,6 +8,7 @@
 .answers
   - if @answers.any?
     p = '____________________________________________________________'
+    div id='answers-list' data-question-id=@question.id
     = render @answers  
     p = '____________________________________________________________'
 .new-answer

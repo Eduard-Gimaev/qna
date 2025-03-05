@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
 
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update mark_as_best destroy]
+  after_action :publish_answer, only: :create
 
   def new
     @answer = @question.answers.new
@@ -34,6 +35,18 @@ class AnswersController < ApplicationController
   end
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "question_#{@question.id}_answers",
+      render_to_string(
+        partial: 'answers/answer',
+        locals: { answer: @answer }
+      )
+    )
+  end
 
   def find_question
     @question = Question.with_attached_files.find(params[:question_id])
