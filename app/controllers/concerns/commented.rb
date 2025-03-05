@@ -7,13 +7,8 @@ module Commented
                    elsif params[:answer_id]
                      Answer.find(params[:answer_id])
                    end
-    @comment = @commentable.comments.new(comment_params)
-    @comment.user = current_user
-    if @comment.save
-      redirect_to @commentable.is_a?(Question) ? @commentable : @commentable.question
-    else
-      redirect_to @commentable.is_a?(Question) ? @commentable : @commentable.question
-    end
+    @comment = @commentable.comments.create(comment_params.merge(user: current_user))
+    redirect_to @commentable.is_a?(Question) ? @commentable : @commentable.question
   end
 
   def destroy_comment

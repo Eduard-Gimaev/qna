@@ -14,8 +14,8 @@ Rails.application.routes.draw do
     resources :comments, only: %i[create destroy], shallow: true
   end
 
-  resources :questions, concerns: [:votable, :commentable], shallow: true do
-    resources :answers, concerns: [:votable, :commentable], shallow: true do
+  resources :questions, concerns: %i[votable commentable], shallow: true do
+    resources :answers, concerns: %i[votable commentable], shallow: true do
       member do
         patch :mark_as_best
       end
