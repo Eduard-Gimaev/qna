@@ -2,6 +2,7 @@
 
 class AnswersController < ApplicationController
   include Voted
+  include Commented
 
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i[update mark_as_best destroy]

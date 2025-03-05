@@ -4,10 +4,15 @@
 .question
   = render @question
 
+.comments
+  - if @question.comments.any?
+    div id='comments-list' 
+    = render @question.comments
+  / .new-comment
+  /   = render 'comments/form', commentable: @question  
 
 .answers
   - if @answers.any?
-    p = '____________________________________________________________'
     div id='answers-list' data-question-id=@question.id
     = render @answers  
     p = '____________________________________________________________'

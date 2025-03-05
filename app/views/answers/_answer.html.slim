@@ -1,12 +1,13 @@
 div id="answer-#{answer.id}"
-  table border = "0"
-      tr 
-        th colspan="3" = answer.best ? "#{answer.body} - BEST!!!" : "#{answer.body}"
-      tr
-        - if user_signed_in? && answer.body && current_user&.author?(answer)
-          th = button_to 'Edit an answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-          th = button_to 'Delete an answer', answer_path(answer), method: :delete, remote: true
-          th = button_to 'The best answer', mark_as_best_answer_path(answer), method: :patch, remote: true
+  div style = "padding: 10px; margin: 10px;"
+    .comment-meta = "#{answer.user.email} on #{answer.created_at.strftime('%Y-%m-%d %H:%M')}"
+    = answer.best ? "#{answer.body} - BEST!!!" : "#{answer.body}"
+        
+  div.crud-buttons
+    - if user_signed_in? && answer.body && current_user&.author?(answer)
+      = button_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      = button_to 'Delete', answer_path(answer), method: :delete, remote: true
+      = button_to 'Mark as the BEST', mark_as_best_answer_path(answer), method: :patch, remote: true
   .attachments
     - if answer.files.attached?
     ul
@@ -21,12 +22,12 @@ div id="answer-#{answer.id}"
           - else
             li = link_to link.name, link.url  
   .voting
-  - if user_signed_in?
-    = link_to 'Like', like_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
-    = " / "
-    = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
-    = " :: "
-    span id="answer-rating-#{answer.id}" = answer.rating
+    - if user_signed_in?
+      = link_to 'Like', like_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+      = " / "
+      = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
+      = " :: "
+      span id="answer-rating-#{answer.id}" = answer.rating
     
 div id="answer-error-#{answer.id}"
 

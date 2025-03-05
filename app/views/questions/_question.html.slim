@@ -9,12 +9,16 @@
   table border = "0"
     thead
       tr
-        th colspan="2" = "#{question.title}: #{question.body}" 
+        th = "#{question.title}" 
     tbody
       tr 
-        - if user_signed_in? && current_user&.author?(find_question)
-          th = button_to 'Edit a question', '#', class: 'edit-question-link', data: { question_id: question.id }
-          th = button_to 'Delete a question', question_path(find_question), method: :delete      
+        td = "#{question.body}" 
+       
+  div.crud-buttons
+    - if user_signed_in? && current_user&.author?(find_question)
+      = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+      = button_to 'Delete', question_path(find_question), method: :delete, remote: true
+
   .attachments
     - if question.files.attached?
       ul
