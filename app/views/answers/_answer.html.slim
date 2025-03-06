@@ -28,11 +28,10 @@ div id="answer-#{answer.id}"
       = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
       = " :: "
       span id="answer-rating-#{answer.id}" = answer.rating
-  .comments
-    - if answer.comments.any?
-      ul
-        - answer.comments.each do |comment|
-          li = comment.body
+  .comments-answer
+      div id="comments-list-answer-#{answer.id}" data-answer-id=answer.id
+        = render answer.comments
+
   .new-comment-answer
     = render 'comments/form', commentable: answer
     
