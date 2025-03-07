@@ -3,16 +3,14 @@ import consumer from "./consumer"
 document.addEventListener('turbolinks:load', () => {
   const commentsElements = document.querySelectorAll('[id^="comments-list"]')
   console.log('commentsElements:', commentsElements)
-  commentsElements.forEach((commentsElement) => {
-    const questionId = commentsElement.dataset.questionId
-    const answerId = commentsElement.dataset.answerId
+  
+  commentsElements.forEach((element) => {
+    const questionId = element.dataset.questionId
+    const answerId = element.dataset.answerId
 
-
-    consumer.subscriptions.create({ channel: "CommentsChannel", question_id: questionId  }, {
+    consumer.subscriptions.create({ channel: "CommentsChannel", question_id: questionId, answer_id: answerId }, {
       connected() {
         console.log('Connected to the CommentsChannel')
-        console.log('questionId:', questionId)
-        console.log('answerId:', answerId)
       },
 
       disconnected() {
@@ -21,19 +19,15 @@ document.addEventListener('turbolinks:load', () => {
 
       received(data) {
         console.log("Received data:", data)
-        console.log('questionId:', questionId)
-        console.log('answerId:', answerId)
         if (answerId) {
-          console.log('Processing comment for answerId:', answerId)
-          const answerCommentsElement = document.querySelector(`#comments-list-${answerId}`)
-          if (answerCommentsElement) {
-            answerCommentsElement.insertAdjacentHTML('beforeend', data)
+          const commentsAnswer = document.querySelector(`#comments-list-answer-${answerId}`)
+          if (commentsAnswer) {
+            commentsAnswer.insertAdjacentHTML('beforeend', data)
           }
-        } else if (questionId) { 
-          console.log('Processing comment for questionId:', questionId)
-          const questionCommentsElement = document.querySelector(`#comments-list-${questionId}`)
-          if (questionCommentsElement) {
-            questionCommentsElement.insertAdjacentHTML('beforeend', data)
+        } else if (questionId) {
+          const commentsQuestion = document.querySelector(`#comments-list-question-${questionId}`)
+          if (commentsQuestion) {
+            commentsQuestion.insertAdjacentHTML('beforeend', data)
           }
         }
       }
