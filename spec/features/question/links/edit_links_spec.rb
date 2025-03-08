@@ -14,8 +14,8 @@ feature 'User can edit links in the question', '
     scenario 'edits links' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Edit a question'
       within '.question' do
+        click_on 'Edit'
         click_on 'add link'
         within all('.nested-fields').last do
           fill_in 'Link name', with: 'yandex'

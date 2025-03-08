@@ -13,7 +13,7 @@ feature 'User can edit links in the question', '
     scenario 'deletes links' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Edit a question'
+      click_on 'Edit'
       expect(page).to have_link 'Link_name', href: 'http://google.com'
 
       click_on 'x'

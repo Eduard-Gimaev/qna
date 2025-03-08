@@ -19,7 +19,7 @@ feature 'User can choose the best answer', "
 
       within "#answer-#{answer.id}" do
         expect(page).to have_no_content 'BEST'
-        click_on 'The best answer'
+        click_on 'THE BEST'
         expect(page).to have_content 'BEST'
       end
     end

@@ -18,7 +18,7 @@ feature 'User can edit his question', "
         question.files.attach(io: Rails.root.join('spec', 'rails_helper.rb').open, filename: 'rails_helper.rb', content_type: 'text/plain')
         question.save
         visit question_path(question)
-        click_on 'Edit a question'
+        click_on 'Edit'
       end
 
       scenario 'edits his question without errors' do

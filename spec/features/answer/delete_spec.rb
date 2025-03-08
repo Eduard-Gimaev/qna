@@ -20,7 +20,7 @@ feature 'User can delete his own answer', '
       expect(page).to have_content answer.body
     end
 
-    click_on 'Delete an answer'
+    click_on 'Delete'
 
     expect(page).to have_no_content answer.body
   end
@@ -29,6 +29,6 @@ feature 'User can delete his own answer', '
     sign_in(other_user)
     visit question_path(question)
     expect(page).to have_content answer.body
-    expect(page).to have_no_link 'Delete an answer'
+    expect(page).to have_no_link 'Delete'
   end
 end

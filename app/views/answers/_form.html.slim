@@ -3,9 +3,7 @@
 = form_with model: [ @question, @answer], class: 'new-answer', local: false  do |f|
   .answer
     p
-      = f.label :body, 'Type your answer here:'
-      br
-      = f.text_area :body
+      = f.text_area :body, placeholder: 'Type your answer here'
   .answer_attachment
     p
       = f.label :files, 'Attach your files here:'

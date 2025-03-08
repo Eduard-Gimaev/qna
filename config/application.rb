@@ -27,5 +27,10 @@ module Qna
                        routing_specs: false,
                        request_specs: false
     end
+
+    # config.middleware.use Warden::Manager do |manager|
+    #   manager.default_strategies :database_authenticatable, :rememberable, :trackable, :validatable
+    #   manager.failure_app = Devise::FailureApp
+    # end
   end
 end

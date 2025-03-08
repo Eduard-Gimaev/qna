@@ -15,7 +15,7 @@ feature 'User can edit links in the answer', '
     scenario 'edits links' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Edit an answer'
+      click_on 'Edit'
       within '.answers' do
         click_on 'add link'
         within all('.nested-fields').last do

@@ -14,11 +14,12 @@ feature 'User can edit links in the answer', '
     scenario 'deletes links' do
       sign_in(user)
       visit question_path(question)
-      click_on 'Edit an answer'
-      expect(page).to have_link 'Link_name', href: 'http://google.com'
-
-      click_on 'x'
-      click_on 'Save'
+      within '.answers' do
+        click_on 'Edit'
+        expect(page).to have_link 'Link_name', href: 'http://google.com'
+        click_on 'x'
+        click_on 'Save'
+      end
       expect(page).to have_no_link 'Link_name'
     end
   end
