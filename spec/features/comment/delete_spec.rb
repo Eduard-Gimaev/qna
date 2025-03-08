@@ -1,11 +1,10 @@
-require "rails_helper"
+require 'rails_helper'
 
-feature "User can delete his own comment", '
+feature 'User can delete his own comment', '
   In order to delete comment
   As an authenticated user
   I would like to be able to delete his own comment
-' do    
-
+' do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
@@ -17,20 +16,19 @@ feature "User can delete his own comment", '
     visit question_path(question)
   end
 
-  scenario "User tries to delete his own comment for the question", :js do
-    # within "#comments-list-question-#{question.id}" do
-    #   expect(page).to have_content 'Comment for the question'
-    #   click_on 'Delete'
-    #   expect(page).to_not have_content 'Comment for the question'
-    # end
+  scenario 'User tries to delete his own comment for the question', :js do
+    within "#comments-list-question-#{question.id}" do
+      expect(page).to have_content 'Comment for the question'
+      click_on 'Delete'
+      expect(page).to have_no_content 'Comment for the question'
+    end
   end
 
-  scenario "User tries to delete his own comment for the answer", :js do
-    # within "#comments-list-answer-#{answer.id}" do
-    #   expect(page).to have_content 'Comment for the answer'
-    #   click_on 'Delete'
-    #   expect(page).to_not have_content 'Comment for the answer'
-    # end
+  scenario 'User tries to delete his own comment for the answer', :js do
+    within "#comments-list-answer-#{answer.id}" do
+      expect(page).to have_content 'Comment for the answer'
+      click_on 'Delete'
+      expect(page).not_to have_content 'Comment for the answer'
+    end
   end
 end
-

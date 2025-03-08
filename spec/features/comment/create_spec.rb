@@ -5,7 +5,7 @@ feature 'User can create comment', "
   In order to get answer from a community
   As an authenticated user
   I'd like to be able to ask the question
-" do    
+" do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
   given!(:answer) { create(:answer, question: question) }
@@ -25,13 +25,14 @@ feature 'User can create comment', "
         expect(page).to have_content 'Сomment for a question'
       end
     end
+
     scenario 'adds a comment to the answer', :js do
       within '.new-comment-answer' do
         fill_in 'comment[body]', with: 'Сomment for an answer'
         click_on 'Submit'
       end
-       within "#comments-list-answer-#{answer.id}" do
-       expect(page).to have_content 'Сomment for an answer'
+      within "#comments-list-answer-#{answer.id}" do
+        expect(page).to have_content 'Сomment for an answer'
       end
     end
   end

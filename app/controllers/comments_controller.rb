@@ -8,21 +8,14 @@ class CommentsController < ApplicationController
       ActionCable.server.broadcast "comments_#{@commentable.id}_channel",
                                    render_to_string(partial: 'comments/comment', locals: { comment: @comment })
 
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
-    else
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
     end
+    redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
   end
 
   def destroy
     @comment = Comment.find(params[:id])
-    if current_user.author?(@comment)
-      @comment.destroy
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
-    else
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
-    end
-    
+    @comment.destroy if current_user.author?(@comment)
+    redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
   end
 
   private
