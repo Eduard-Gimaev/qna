@@ -17,6 +17,7 @@ feature 'User can create question', "
     end
 
     scenario 'asks a question' do
+      save_and_open_page
       fill_in 'question[title]', with: 'Title of the question'
       fill_in 'question[body]', with: 'Text of the question'
       click_on 'Ask'
