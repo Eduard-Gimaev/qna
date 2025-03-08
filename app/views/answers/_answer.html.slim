@@ -1,13 +1,13 @@
 div id="answer-#{answer.id}"
-  div style = "padding: 10px; margin: 10px;"
-    .comment-meta = "#{answer.user.email} on #{answer.created_at.strftime('%Y-%m-%d %H:%M')}"
+  div
     = answer.best ? "#{answer.body} - BEST!!!" : "#{answer.body}"
+    .comment-meta = "#{answer.user.email} on #{answer.created_at.strftime('%Y-%m-%d %H:%M')}"
         
   div.crud-buttons
     - if user_signed_in? && answer.body && current_user&.author?(answer)
       = button_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       = button_to 'Delete', answer_path(answer), method: :delete, remote: true
-      = button_to 'Mark as the BEST', mark_as_best_answer_path(answer), method: :patch, remote: true
+      = button_to 'THE BEST', mark_as_best_answer_path(answer), method: :patch, remote: true
   .attachments
     - if answer.files.attached?
     ul
@@ -28,9 +28,10 @@ div id="answer-#{answer.id}"
       = link_to 'Dislike', dislike_answer_path(answer), class: "voting", method: :post, remote: true, data: { type: :json, resource: "answer", id: answer.id }
       = " :: "
       span id="answer-rating-#{answer.id}" = answer.rating
-  .comments-answer
-      div id="comments-list-answer-#{answer.id}" data-answer-id=answer.id
-        = render answer.comments
+
+    div id="comments-list-answer-#{answer.id}" data-answer-id=answer.id
+      h3 Comments on answer:
+      = render answer.comments
 
   .new-comment-answer
     = render 'comments/form', commentable: answer
@@ -39,7 +40,6 @@ div id="answer-error-#{answer.id}"
 
   / - Edit an answer -
   = form_with model: answer, local: false, class: 'hidden', html: { id: "edit-answer-#{answer.id}"  } do |f|
-    h5 Adding an answer:
     p
       = f.label :body, 'Edit your answer here:'
       br

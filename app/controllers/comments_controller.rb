@@ -8,9 +8,9 @@ class CommentsController < ApplicationController
       ActionCable.server.broadcast "comments_#{@commentable.id}_channel",
                                    render_to_string(partial: 'comments/comment', locals: { comment: @comment })
 
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question, notice: 'Comment was successfully deleted.'
+      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
     else
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question, alert: 'You are not the author of the comment.'
+      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
     end
   end
 
@@ -18,9 +18,9 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     if current_user.author?(@comment)
       @comment.destroy
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question, notice: 'Comment was successfully deleted.'
+      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
     else
-      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question, alert: 'You are not the author of the comment.'
+      redirect_to @comment.commentable.is_a?(Question) ? @comment.commentable : @comment.commentable.question
     end
     
   end

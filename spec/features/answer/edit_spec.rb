@@ -22,7 +22,7 @@ feature 'User can edit an answer', '
         answer.save
 
         visit question_path(question)
-        click_on 'Edit an answer'
+        click_on 'Edit'
       end
 
       scenario 'edits his answer' do

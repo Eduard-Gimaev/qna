@@ -21,14 +21,18 @@ feature 'User can create comment', "
         fill_in 'comment[body]', with: 'Сomment for a question'
         click_on 'Submit'
       end
-      expect(page).to have_content 'Сomment for a question'
+      within "#comments-list-question-#{question.id}" do
+        expect(page).to have_content 'Сomment for a question'
+      end
     end
     scenario 'adds a comment to the answer', :js do
-      within '.new-comment-question' do
+      within '.new-comment-answer' do
         fill_in 'comment[body]', with: 'Сomment for an answer'
         click_on 'Submit'
       end
-      expect(page).to have_content 'Сomment for an answer'
+       within "#comments-list-answer-#{answer.id}" do
+       expect(page).to have_content 'Сomment for an answer'
+      end
     end
   end
 end
