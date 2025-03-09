@@ -27,9 +27,8 @@ feature 'User can delete his own comment', '
   scenario 'User tries to delete his own comment for the answer', :js do
     within "#comments-list-answer-#{answer.id}" do
       expect(page).to have_content 'Comment for the answer'
-      save_and_open_page
       click_on 'Delete'
-      expect(page).not_to have_content 'Comment for the answer'
+      expect(page).to have_no_content 'Comment for the answer'
     end
   end
 end
