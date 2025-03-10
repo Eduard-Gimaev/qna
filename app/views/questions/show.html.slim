@@ -4,10 +4,19 @@
 .question
   = render @question
 
-p = '____________________________________________________________'
+div id='comments-list-question-#{@question.id}' data-question-id=@question.id
+  div 
+    h3 Comments on question:
+    = render @question.comments
+.new-comment-question
+  = render 'comments/form', commentable: @question  
+
 .answers
-  = render @answers  
-p = '____________________________________________________________'
+  h3 Answers:
+  - if @answers.any?
+    div id='answers-list' data-question-id=@question.id
+    = render @answers  
+    p = '____________________________________________________________'
 .new-answer
   = render 'answers/form'
 
