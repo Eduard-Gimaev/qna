@@ -17,7 +17,5 @@ class User < ApplicationRecord
     resource.user_id == id
   end
 
-  def self.find_for_oauth(auth)
-    
-  end
+  def self.find_for_oauth(auth); end
 end

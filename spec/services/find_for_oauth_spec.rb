@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Services::FindForOauth do
-  subject { Services::FindForOauth.new(auth) }
+  subject(:service) { described_class.new(auth) }
 
   let!(:user) { create(:user) }
   let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456') }
@@ -10,7 +10,7 @@ RSpec.describe Services::FindForOauth do
     it 'returns the user' do
       user.authorizations.create(provider: 'facebook',
                                  uid: '123456')
-      expect(subject.call).to eq user
+      expect(service.call).to eq user
     end
   end
 
@@ -19,15 +19,15 @@ RSpec.describe Services::FindForOauth do
       let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: { email: user.email }) }
 
       it 'does not create a new user' do
-        expect { subject.call }.not_to change(User, :count)
+        expect { service.call }.not_to change(User, :count)
       end
 
       it 'creates authorization for user' do
-        expect { subject.call }.to change(user.authorizations, :count).by(1)
+        expect { service.call }.to change(user.authorizations, :count).by(1)
       end
 
       it 'creates authorization with provider and uid' do
-        authorization = subject.call.authorizations.first
+        authorization = service.call.authorizations.first
         expect(authorization.provider).to eq auth.provider
         expect(authorization.uid).to eq auth.uid
       end
@@ -41,22 +41,22 @@ RSpec.describe Services::FindForOauth do
       end
 
       it 'creates a new user' do
-        expect { subject.call }.to change(User, :count).by(1)
+        expect { service.call }.to change(User, :count).by(1)
       end
 
       it 'returns new user' do
-        expect(subject.call).to be_a(User)
+        expect(service.call).to be_a(User)
       end
 
       it 'creates authorization for user' do
-        user = subject.call
+        user = service.call
         expect(user.authorizations
                     .where(provider: auth.provider, uid: auth.uid)
                     .count).to eq 1
       end
 
       it 'creates authorization with provider and uid' do
-        authorization = subject.call.authorizations.first
+        authorization = service.call.authorizations.first
         expect(authorization.provider).to eq auth.provider
         expect(authorization.uid).to eq auth.uid
       end
