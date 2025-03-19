@@ -17,5 +17,11 @@ class User < ApplicationRecord
     resource.user_id == id
   end
 
-  def self.find_for_oauth(auth); end
+  def self.find_for_oauth(auth)
+    Services::FindForOauth.new(auth).call
+  end
+
+  def create_authorization(auth)
+    authorizations.create(provider: auth.provider, uid: auth.uid)
+  end
 end

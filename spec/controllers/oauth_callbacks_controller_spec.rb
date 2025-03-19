@@ -10,15 +10,17 @@ RSpec.describe OauthCallbacksController do
 
     it 'finds user from oauth data' do
       request.env['omniauth.auth'] = oauth_data
-      expect(User).to have_received(:find_for_oauth).with(oauth_data)
+      allow(Services::FindForOauth).to receive(:new).with(oauth_data).and_return(instance_double(Services::FindForOauth, call: nil))
       get :github
+      expect(Services::FindForOauth).to have_received(:new).with(oauth_data)
     end
 
     context 'when user exists' do
       let!(:user) { create(:user) }
 
       before do
-        allow(User).to receive(:find_for_oauth).and_return(user)
+        allow(Services::FindForOauth).to receive(:new).with(oauth_data).and_return(instance_double(Services::FindForOauth, call: user))
+        request.env['omniauth.auth'] = oauth_data
         get :github
       end
 
@@ -33,7 +35,8 @@ RSpec.describe OauthCallbacksController do
 
     context 'when user does not exist' do
       before do
-        allow(User).to receive(:find_for_oauth).and_return(nil)
+        allow(Services::FindForOauth).to receive(:new).with(oauth_data).and_return(instance_double(Services::FindForOauth, call: nil))
+        request.env['omniauth.auth'] = oauth_data
         get :github
       end
 
