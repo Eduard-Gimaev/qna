@@ -5,7 +5,9 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
       sign_in_and_redirect user, event: :authentication
       set_flash_message(:notice, :success, kind: 'Github') if is_navigational_format?
     else
-      redirect_to root_path, alert: 'Something went wrong'
+      redirect_to root_path,
+                  alert: I18n.t('devise.omniauth_callbacks.failure',
+                                kind: 'Github', reason: 'something went wrong')
     end
   end
 end
