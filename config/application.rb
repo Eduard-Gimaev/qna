@@ -20,6 +20,9 @@ module Qna
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+
+    config.autoload_paths += Dir[Rails.root.join('app', '*')]
+
     config.generators do |g|
       g.test_framework :rspec,
                        view_specs: false,
@@ -27,6 +30,8 @@ module Qna
                        routing_specs: false,
                        request_specs: false
     end
+
+
 
     # config.middleware.use Warden::Manager do |manager|
     #   manager.default_strategies :database_authenticatable, :rememberable, :trackable, :validatable
