@@ -9,6 +9,7 @@ RSpec.describe User do
   it { is_expected.to validate_presence_of :password }
   it { is_expected.to have_many(:questions).dependent(true) }
   it { is_expected.to have_many(:answers).dependent(true) }
+  it { is_expected.to have_many(:authorizations).dependent(true) }
 
   it 'has a correct author for an answer' do
     expect(user_first).to be_author(answer_first)
