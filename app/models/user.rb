@@ -4,7 +4,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[github yandex]
 
   has_many :questions, dependent: :destroy
   has_many :answers, dependent: :destroy
@@ -13,5 +14,9 @@ class User < ApplicationRecord
 
   def author?(resource)
     resource.user_id == id
+  end
+
+  def self.find_for_oauth(auth)
+    # FindForOauth.new(auth).call
   end
 end
