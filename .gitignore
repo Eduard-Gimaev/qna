@@ -38,3 +38,7 @@ yarn-debug.log*
 
 # Ignore macOS system files
 .DS_Store
+
+# Ignore .zshrc
+.zshrc
+

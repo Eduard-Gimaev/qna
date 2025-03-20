@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  devise_for :users
+  root to: 'questions#index'
+
+  devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
   concern :votable do
     member do
@@ -29,6 +31,4 @@ Rails.application.routes.draw do
   resources :attachments, only: %i[destroy]
   resources :links, only: %i[destroy]
   resources :rewards, only: %i[index destroy]
-
-  root to: 'questions#index'
 end
