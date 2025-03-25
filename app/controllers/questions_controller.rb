@@ -5,7 +5,10 @@ class QuestionsController < ApplicationController
 
   skip_before_action :authenticate_user!, only: %i[index show]
   before_action :find_question, only: %i[show edit update]
+  before_action :authorize_question!
   after_action :publish_question, only: %i[create]
+  after_action :verify_authorized
+  
 
   def index
     @questions = Question.all
@@ -69,5 +72,9 @@ class QuestionsController < ApplicationController
     params.require(:question).permit(:title, :body, files: [],
                                                     links_attributes: %i[name url _destroy],
                                                     reward_attributes: %i[title image]).merge(user_id: current_user.id)
+  end
+
+  def authorize_question!
+    authorize(find_question)
   end
 end
