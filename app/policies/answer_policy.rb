@@ -1,4 +1,4 @@
-class QuestionPolicy < ApplicationPolicy
+class AnswerPolicy < ApplicationPolicy
   def create?
     user.present?
   end
@@ -11,6 +11,10 @@ class QuestionPolicy < ApplicationPolicy
     user.author?(record)
   end
 
+  def mark_as_best?
+    user.author?(record.question)
+  end
+
   def vote?
     user.present? && !user.author?(record)
   end
@@ -18,16 +22,8 @@ class QuestionPolicy < ApplicationPolicy
   def like?
     vote?
   end
-  def dislike?    
+
+  def dislike?
     vote?
-  end
-
-  def index?
-    true
-  end
-
-  def show?
-    true
-  end
-
+  end 
 end
