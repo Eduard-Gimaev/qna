@@ -29,5 +29,5 @@ class QuestionPolicy < ApplicationPolicy
   def show?
     true
   end
-
+  
 end
