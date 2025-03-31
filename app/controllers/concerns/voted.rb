@@ -24,16 +24,9 @@ module Voted
   end
 
   def render_vote(vote_type)
+    @entity.make_vote(current_user, vote_type)
     respond_to do |format|
-      if current_user.author?(@entity)
-        format.json do
-          render json: { error: "You can't vote for your own #{model_klass.to_s.downcase}" }
-        end
-      else
-        @entity.make_vote(current_user, vote_type)
-
-        format.json { render json: { rating: @entity.rating } }
-      end
+      format.json { render json: { rating: @entity.rating } }
     end
   end
 end
