@@ -16,14 +16,29 @@ RSpec.describe 'Profile API', type: :request do
     end
 
     context 'when the user is authorized' do
-      let(:access_token) { create(:access_token)}
+      let(:me) { create(:user) }
+      let(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
-      it 'returns a status code of successful if access token is valid' do
+      before do
         auth_headers = headers.merge("Authorization" => "Bearer #{access_token.token}")
         get '/api/v1/profiles/me', headers: auth_headers
-        puts "Response status: #{response.status}"
-        puts "Response body: #{response.body}"
+      end
+
+      it 'returns a status code of successful if access token is valid' do
         expect(response).to be_successful
+      end
+
+      it 'returns all public fields of the user' do
+        json_response = JSON.parse(response.body)
+        %w[id email created_at updated_at admin].each do |attr|
+          expect(json_response[attr]).to eq me.send(attr).as_json
+        end
+      end
+      it 'does not return private fields of the user' do
+        json_response = JSON.parse(response.body)
+        %w[password encrypted_password].each do |attr|
+          expect(json_response[attr]).to be_nil
+        end
       end
     end
   end
