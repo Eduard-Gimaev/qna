@@ -17,6 +17,10 @@ class User < ApplicationRecord
     resource.user_id == id
   end
 
+  def admin?
+    admin
+  end
+
   def self.find_for_oauth(auth)
     Services::FindForOauth.new(auth).call
   end
