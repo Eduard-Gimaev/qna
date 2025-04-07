@@ -29,13 +29,11 @@ RSpec.describe 'Profile API', type: :request do
       end
 
       it 'returns all public fields of the user' do
-        json_response = JSON.parse(response.body)
         %w[id email created_at updated_at admin].each do |attr|
           expect(json_response[attr]).to eq me.send(attr).as_json
         end
       end
       it 'does not return private fields of the user' do
-        json_response = JSON.parse(response.body)
         %w[password encrypted_password].each do |attr|
           expect(json_response[attr]).to be_nil
         end
