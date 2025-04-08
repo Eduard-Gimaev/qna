@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-RSpec.describe 'Profile API', type: :request do
+RSpec.describe 'Profiles API', type: :request do
   let(:headers) {{ "Content-Type" => "application/json", "ACCEPT" => "application/json" }}
 
-  describe 'GET /api/v1/profile/me' do
+  describe 'GET /api/v1/profiles/me' do
     context 'when the user is not authorized' do
       it 'returns a 401 Unauthorized' do
         get '/api/v1/profiles/me', headers: headers
@@ -24,7 +24,7 @@ RSpec.describe 'Profile API', type: :request do
         get '/api/v1/profiles/me', headers: auth_headers
       end
 
-      it 'returns a status code of successful if access token is valid' do
+      it 'returns successful status if access token is valid' do
         expect(response).to be_successful
       end
 
