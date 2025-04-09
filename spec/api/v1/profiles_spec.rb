@@ -4,16 +4,9 @@ RSpec.describe 'Profiles API', type: :request do
   let(:headers) {{ "Content-Type" => "application/json", "ACCEPT" => "application/json" }}
 
   describe 'GET /api/v1/profiles/me' do
-    context 'when the user is not authorized' do
-      it 'returns a 401 Unauthorized' do
-        get '/api/v1/profiles/me', headers: headers
-        expect(response.status).to eq 401
-      end
-      it 'returns a status code of 401 if access token is not valid' do
-        get '/api/v1/profiles/me', params: { access_token: 'invalid_token' }, headers: headers
-        expect(response.status).to eq 401
-      end
-    end
+    let(:api_path) { '/api/v1/profiles/me' }
+    let(:method) { :get }
+    it_behaves_like 'API Authorizable'
 
     context 'when the user is authorized' do
       let(:me) { create(:user) }
