@@ -6,10 +6,10 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :profiles, only:[] do
+      resources :profiles, only: %i[index show create update destroy] do
         get :me, on: :collection 
       end
-      resources :questions, only: %i[index] do
+      resources :questions, only: %i[index show create update destroy] do
       end
     end
   end
