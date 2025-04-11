@@ -10,7 +10,6 @@ RSpec.describe 'Questions API', type: :request do
     end 
 
     let(:access_token) { create(:access_token) }
-    let!(:user) { create(:user) }
     let!(:questions) { create_list(:question, 3) }
     let!(:question) { questions.first }
     let!(:answers) { create_list(:answer, 3, question:) }
@@ -56,46 +55,25 @@ RSpec.describe 'Questions API', type: :request do
         end
       end
     end
+  end
 
+  describe 'POST /api/v1/questions/:id' do
     describe 'comments' do
-      let(:question_comments) { create_list(:comment, 3, commentable: question, user: user) }
-      let(:answer_comments) { create_list(:comment, 3, commentable: answer, user: user) }
+      let(:access_token) { create(:access_token) }
+      let(:current_user) { User.find(access_token.resource_owner_id) }
+      let(:question) { create(:question, user: current_user) }
+      let(:api_path) { "/api/v1/questions/#{question.id}/comments" }
 
       before do
         auth_headers = headers.merge("Authorization" => "Bearer #{access_token.token}")
-        get api_path, headers: auth_headers
+        post api_path, params: { comment: { body: 'API comment' } }.to_json, headers: auth_headers
       end
 
-      it 'returns a list of comments for each question' do
-
+      it 'returns a comment of the question' do
+        expect(json_response['comment']['body']).to eq 'API comment'
+        expect(question.comments.count).to eq 1
       end
     end
-
-
-    # describe 'file attachments' do
-    #   let(:file_response) { question_response['file_attachments'].first }
-
-    #   it 'returns a list of file attachments for each question' do
-    #     expect(question_response['file_attachments'].size).to eq 2
-    #   end
-
-    #   it 'returns the file url' do
-    #     expect(file_response['file_url']).to eq file_attachments.first.file.url
-    #   end
-    # end
-
-    # describe 'links' do
-    #   let(:link_response) { question_response['links'].first }
-
-    #   it 'returns a list of links for each question' do
-    #     expect(question_response['links'].size).to eq 2
-    #   end
-
-    #   it 'returns the url and title of the link' do
-    #     expect(link_response['url']).to eq links.first.url
-    #     expect(link_response['title']).to eq links.first.title
-    #   end
-    # end
   end
 
   describe 'POST /api/v1/questions' do

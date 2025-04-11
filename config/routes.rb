@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         get :me, on: :collection 
       end
       resources :questions, only: %i[index show create update destroy] do
+        resources :comments, only: %i[index create destroy], shallow: true
       end
     end
   end

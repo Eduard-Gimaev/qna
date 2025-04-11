@@ -3,11 +3,11 @@ class Api::V1::QuestionsController < Api::V1::BaseController
  
   def index
     questions = Question.includes(:answers, :comments).all
-    render json: questions, include: ['answers', 'comments']
+    render json: questions, include: ['answers', 'comments', 'answers.comments']
   end
 
   def show
-    render json: @question, Serializer: QuestionSerializer
+    render json: @question, include: ['comments', 'answers', 'answers.comments']
   end
 
   def create
@@ -42,7 +42,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def find_question
-    @question = current_resource_owner.questions.find(params[:id])
+    @question = current_resource_owner.questions.includes(:comments, answers: :comments).find(params[:id])
   rescue ActiveRecord::RecordNotFound
     render json: { errors: "Question not found" }, status: :not_found
   end
