@@ -7,7 +7,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   end
 
   def show
-    render json: @question, include: ['comments', 'answers', 'answers.comments']
+    render json: @question, include: ['comments', 'answers', 'links', 'answers.comments']
   end
 
   def create
