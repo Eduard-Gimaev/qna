@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Questions API', type: :request do
-  let(:headers) {{ "Content-Type" => "application/json", "ACCEPT" => "application/json" }}
+  let!(:headers) {{ "Content-Type" => "application/json", "ACCEPT" => "application/json" }}
   let!(:api_path) { '/api/v1/questions' }
-  let(:access_token) { create(:access_token) }
-  let(:current_user) { User.find(access_token.resource_owner_id) }
+  let!(:access_token) { create(:access_token) }
+  let!(:current_user) { User.find(access_token.resource_owner_id) }
   let!(:questions) { create_list(:question, 3, user: current_user) }
   let!(:question) { questions.first }
   let!(:answers) { create_list(:answer, 2, question:, user: current_user) }

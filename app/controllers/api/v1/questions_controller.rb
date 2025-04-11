@@ -1,5 +1,5 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
-  before_action :find_question, only: [:show, :update, :destroy]
+  before_action :find_question, only: %i[update destroy show]
  
   def index
     questions = Question.includes(:answers, :comments).all

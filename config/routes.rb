@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       end
       resources :questions, only: %i[index show create update destroy] do
         resources :comments, only: %i[index create destroy], shallow: true
+        resources :answers, only: %i[index create show update destroy], shallow: true
       end
     end
   end

@@ -1,6 +1,5 @@
 # app/controllers/api/v1/comments_controller.rb
 class Api::V1::CommentsController < Api::V1::BaseController
-  before_action :doorkeeper_authorize!
   before_action :set_commentable
 
   def create
