@@ -13,34 +13,31 @@ AllCops:
   TargetRubyVersion: 3.2.2
   SuggestExtensions: false
 
-Rails/ThreeStateBooleanColumn:
-  Exclude:
-    - 'db/migrate/20240803184522_add_best_to_answers.rb'  
-
 Layout/LineLength:
   Exclude:
-  - spec/**/*.rb
-  - 'config/initializers/*'
-
-Metrics/BlockLength:
-  Exclude:
-  - spec/**/*.rb
-  - 'config/environments/*'
+    - spec/**/*.rb
+    - 'config/initializers/*'
 
 Metrics/AbcSize:
   Max: 24
-  
+  Exclude:
+    - 'db/migrate/20250331082829_create_doorkeeper_tables.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*.rb
+    - 'config/environments/*'
+
 Metrics/MethodLength:
   Max: 26
+  Exclude:
+    - 'db/migrate/20250331082829_create_doorkeeper_tables.rb'
 
-Style/Documentation:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
+Rails/BulkChangeTable:
   Enabled: false
 
 Rails/FilePath:
-  EnforcedStyle: arguments  
+  EnforcedStyle: arguments
   Exclude:
     - 'spec/features/answer/create_spec.rb'
     - 'spec/features/answer/edit_spec.rb'
@@ -50,27 +47,46 @@ Rails/FilePath:
     - 'spec/features/reward/add_reward_to_question_spec.rb'
     - 'spec/features/reward/index_reward_spec.rb'
 
-Rails/BulkChangeTable:
-  Enabled: false
+Rails/ReversibleMigration:
+  Exclude:
+    - 'db/migrate/20250331082829_create_doorkeeper_tables.rb'
 
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/MultipleMemoizedHelpers:
-  Max: 6
+Rails/ThreeStateBooleanColumn:
+  Exclude:
+    - 'db/migrate/20240803184522_add_best_to_answers.rb'
+    - 'db/migrate/20250331085735_add_admin_to_users.rb'
 
 RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Max: 7
-
-RSpec/VerifiedDoubles:
-  Enabled: false
-
-RSpec/LetSetup:
   Enabled: false
 
 RSpec/IndexedLet:
   Exclude:
     - 'spec/controllers/rewards_controller_spec.rb'
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 10
+
+RSpec/NestedGroups:
+  Max: 7
+
+RSpec/LetSetup:
+  Enabled: false
+
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/StringLiterals:
+  Exclude:
+    - 'db/migrate/20250331082829_create_doorkeeper_tables.rb'

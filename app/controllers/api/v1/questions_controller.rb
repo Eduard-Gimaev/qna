@@ -1,6 +1,6 @@
 class Api::V1::QuestionsController < Api::V1::BaseController
   before_action :find_question, only: %i[update destroy show]
- 
+
   def index
     questions = Question.includes(:answers, :comments).all
     render json: questions, include: ['answers', 'comments', 'answers.comments']
@@ -31,7 +31,7 @@ class Api::V1::QuestionsController < Api::V1::BaseController
     if @question.destroy
       head :no_content
     else
-      render json: { errors: "Unable to delete the question" }, status: :unprocessable_entity
+      render json: { errors: 'Unable to delete the question' }, status: :unprocessable_entity
     end
   end
 
@@ -44,6 +44,6 @@ class Api::V1::QuestionsController < Api::V1::BaseController
   def find_question
     @question = current_resource_owner.questions.includes(:comments, answers: :comments).find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    render json: { errors: "Question not found" }, status: :not_found
+    render json: { errors: 'Question not found' }, status: :not_found
   end
 end

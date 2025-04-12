@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 FactoryBot.define do
   factory :question do
-    title { 'QuestionTitle' }
-    body { 'QuestionBody' }
+    title { 'Question Title' }
+    body { 'Question Body' }
     user
+  end
 
-    trait :invalid do
-      title { nil }
-    end
+  trait :invalid do
+    title { nil }
   end
 end

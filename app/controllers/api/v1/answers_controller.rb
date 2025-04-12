@@ -3,7 +3,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   before_action :find_question, only: %i[create index]
 
   def index
-    answers = @question.answers.includes(:user, :comments, :links, :files)
+    @question.answers.includes(:user, :comments, :links, :files)
     render json: @answers, each_serializer: AnswerSerializer
   end
 
@@ -20,6 +20,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
       render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
   def update
     if @answer.update(answer_params)
       render json: @answer, status: :ok, serializer: AnswerSerializer
@@ -27,7 +28,8 @@ class Api::V1::AnswersController < Api::V1::BaseController
       render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
-  def destroy 
+
+  def destroy
     if @answer.destroy
       head :no_content
     else
@@ -42,7 +44,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def find_question
-    @question = Question.find(params[:question_id]) 
+    @question = Question.find(params[:question_id])
   rescue ActiveRecord::RecordNotFound
     render json: { errors: 'Question not found' }, status: :not_found
   end
@@ -52,5 +54,4 @@ class Api::V1::AnswersController < Api::V1::BaseController
   rescue ActiveRecord::RecordNotFound
     render json: { errors: 'Answer not found' }, status: :not_found
   end
-
 end

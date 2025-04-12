@@ -1,11 +1,12 @@
 require 'rails_helper'
 
-RSpec.describe 'Profiles API', type: :request do
-  let(:headers) {{ "Content-Type" => "application/json", "ACCEPT" => "application/json" }}
+RSpec.describe Api::V1::ProfilesController do
+  let(:headers) { { 'Content-Type' => 'application/json', 'ACCEPT' => 'application/json' } }
 
   describe 'GET /api/v1/profiles/me' do
     let(:api_path) { '/api/v1/profiles/me' }
     let(:method) { :get }
+
     it_behaves_like 'API Authorizable'
 
     context 'when the user is authorized' do
@@ -14,7 +15,7 @@ RSpec.describe 'Profiles API', type: :request do
       let!(:access_token) { create(:access_token, resource_owner_id: me.id) }
 
       before do
-        auth_headers = headers.merge("Authorization" => "Bearer #{access_token.token}")
+        auth_headers = headers.merge('Authorization' => "Bearer #{access_token.token}")
         get '/api/v1/profiles/me', headers: auth_headers
       end
 
@@ -27,13 +28,15 @@ RSpec.describe 'Profiles API', type: :request do
           expect(json_response['user'][attr]).to eq me.send(attr).as_json
         end
       end
+
       it 'does not return private fields of the user' do
         %w[password encrypted_password].each do |attr|
           expect(json_response['user'][attr]).to be_nil
         end
       end
+
       it 'returns list of users excluding the current one' do
-        auth_headers = headers.merge("Authorization" => "Bearer #{access_token.token}")
+        auth_headers = headers.merge('Authorization' => "Bearer #{access_token.token}")
         get '/api/v1/profiles', headers: auth_headers
         expect(json_response['users'].size).to eq 3
         ids = json_response['users'].map { |user| user['id'] }

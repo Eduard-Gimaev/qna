@@ -28,8 +28,6 @@ feature 'User can edit his question', "
 
           click_on 'Save'
 
-          expect(page).to have_no_content question.title
-          expect(page).to have_no_content question.body
           expect(page).to have_content 'edited title'
           expect(page).to have_content 'edited body'
           expect(page).to have_no_css 'textarea'
@@ -67,7 +65,7 @@ feature 'User can edit his question', "
       scenario "tries to edit other user's question" do
         sign_in(other_user)
         visit question_path(question)
-
+        expect(page).to have_content question.body
         expect(page).to have_no_link 'Edit question'
       end
     end

@@ -18,7 +18,8 @@ class QuestionPolicy < ApplicationPolicy
   def like?
     vote?
   end
-  def dislike?    
+
+  def dislike?
     vote?
   end
 
@@ -29,5 +30,4 @@ class QuestionPolicy < ApplicationPolicy
   def show?
     true
   end
-  
 end

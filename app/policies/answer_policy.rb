@@ -25,5 +25,5 @@ class AnswerPolicy < ApplicationPolicy
 
   def dislike?
     vote?
-  end 
+  end
 end
