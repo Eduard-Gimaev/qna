@@ -45,13 +45,9 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def find_question
     @question = Question.find(params[:question_id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: 'Question not found' }, status: :not_found
   end
 
   def find_answer
     @answer = Answer.includes(:comments, :links, files_attachments: :blob).find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: 'Answer not found' }, status: :not_found
   end
 end

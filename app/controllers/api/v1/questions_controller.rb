@@ -43,7 +43,5 @@ class Api::V1::QuestionsController < Api::V1::BaseController
 
   def find_question
     @question = current_resource_owner.questions.includes(:comments, answers: :comments).find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: 'Question not found' }, status: :not_found
   end
 end
