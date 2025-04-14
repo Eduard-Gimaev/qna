@@ -33,11 +33,14 @@ gem 'pundit'
 # gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'cocoon'
 gem 'devise'
+gem 'doorkeeper'
 gem 'jquery-rails'
+gem 'oj'
 gem 'slim-rails'
 
 group :development, :test do
@@ -72,10 +75,10 @@ group :test do
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'launchy'
+  gem 'pundit-matchers'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers', '~> 6.0'
   gem 'webdrivers'
-  gem 'pundit-matchers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

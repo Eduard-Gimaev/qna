@@ -8,7 +8,6 @@ class QuestionsController < ApplicationController
   before_action :authorize_question!
   after_action :publish_question, only: %i[create]
   after_action :verify_authorized
-  
 
   def index
     @questions = Question.all

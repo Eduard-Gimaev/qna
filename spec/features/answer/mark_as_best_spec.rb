@@ -28,6 +28,7 @@ feature 'User can choose the best answer', "
       sign_in(user2)
       visit question_path(question)
 
+      expect(page).to have_content question.title
       expect(page).to have_no_link 'The best answer'
     end
   end

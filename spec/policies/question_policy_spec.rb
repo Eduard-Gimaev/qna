@@ -60,5 +60,4 @@ RSpec.describe QuestionPolicy do
       expect(policy).to permit(user)
     end
   end
-  
 end
