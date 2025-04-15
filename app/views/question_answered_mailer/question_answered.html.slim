@@ -1,0 +1,12 @@
+h1 Your question has received a new answer!
+
+p Hello #{@question.user.email},
+
+p A new answer has been posted to your question titled:
+ul
+  li
+    = @question.title
+
+p Here is the answer:
+p
+  = @answer.body
