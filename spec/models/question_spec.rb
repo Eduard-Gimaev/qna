@@ -18,3 +18,12 @@ RSpec.describe Question do
   it { is_expected.to accept_nested_attributes_for(:links) }
   it { is_expected.to accept_nested_attributes_for(:reward) }
 end
+
+describe 'reputation' do
+  let(:question) { build(:question) }
+
+  it 'calls Services::Reputation#calculate' do
+    expect(Services::Reputation).to receive(:calculate).with(question)
+    question.save!
+  end
+end
