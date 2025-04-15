@@ -22,4 +22,8 @@ class Question < ApplicationRecord
   def calculate_reputation
     ReputationJob.perform_later(self)
   end
+
+  def self.created_yesterday
+    where(created_at: 1.day.ago.all_day)
+  end
 end

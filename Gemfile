@@ -29,6 +29,8 @@ gem 'omniauth-github'
 gem 'omniauth-yandex'
 gem 'pundit'
 gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'whenever', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
