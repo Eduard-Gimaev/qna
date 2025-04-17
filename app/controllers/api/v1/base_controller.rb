@@ -9,6 +9,6 @@ class Api::V1::BaseController < ApplicationController
   end
 
   def record_not_found(exception)
-    render json: { errors: "#{exception.message}" }, status: :not_found
+    render json: { errors: exception.message }, status: :not_found
   end
 end

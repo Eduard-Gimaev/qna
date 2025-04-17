@@ -1,4 +1,4 @@
-module Authorization
+module PunditAuthorization
   extend ActiveSupport::Concern
 
   included do

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-feature 'User can subscribe and unsubscribe from a question', js: true do
+feature 'User can subscribe and unsubscribe from a question', :js do
   given(:user) { create(:user) }
   given!(:question) { create(:question) }
 

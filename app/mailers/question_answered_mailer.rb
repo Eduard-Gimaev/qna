@@ -3,6 +3,6 @@ class QuestionAnsweredMailer < ApplicationMailer
     @question = question
     @answer = answer
 
-    mail(to:  @question.user.email, subject: "Your question has received a new answer")
+    mail(to: @question.user.email, subject: I18n.t('mailers.question_answered_mailer.new_answer_subject'))
   end
 end

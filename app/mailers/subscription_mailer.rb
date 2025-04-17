@@ -20,7 +20,6 @@ class SubscriptionMailer < ApplicationMailer
     @question = question
     @answer = answer
 
-    mail(to: @user.email, subject: "New answer to your question")
+    mail(to: @user.email, subject: I18n.t('mailers.subscription_mailer.new_answer_subject'))
   end
-
 end

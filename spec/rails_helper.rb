@@ -32,10 +32,9 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
 
   # Set the default host for mailer URLs
-  config.before(:each) do
+  config.before do
     Rails.application.routes.default_url_options[:host] = 'example.com'
   end
-
 
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false

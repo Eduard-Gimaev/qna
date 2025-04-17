@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
     authorize @subscription
     @question = @subscription.question
-    @subscription.destroy if @subscription
+    @subscription&.destroy
     if @subscription.destroyed?
       SubscriptionMailer.unsubscribe(@subscription).deliver_now
       flash[:notice] = "You have unsubscribed from #{@question.title}"
@@ -31,5 +31,4 @@ class SubscriptionsController < ApplicationController
   def set_question
     @question = Question.find(params[:question_id])
   end
-  
 end

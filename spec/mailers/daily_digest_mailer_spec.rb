@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe DailyDigestMailer, type: :mailer do
+RSpec.describe DailyDigestMailer do
   describe 'digest' do
     let(:user) { create(:user) }
     let!(:recent_question) { create(:question, created_at: 1.hour.ago, title: 'Recent Question') }

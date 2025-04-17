@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
     if @answer.save
       QuestionAnsweredNotificationJob.perform_later(@question, @answer)
       AnswerNotificationJob.perform_later(@question, @answer)
-      redirect_to @question, notice: 'Your answer has been successfully created.'
+      redirect_to @question, notice: I18n.t('controllers.answers.success_notice')
     else
       render :new
     end

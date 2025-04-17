@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SubscriptionsController, type: :controller do
+RSpec.describe SubscriptionsController do
   let(:user) { create(:user) }
   let(:question) { create(:question) }
 
@@ -9,18 +9,18 @@ RSpec.describe SubscriptionsController, type: :controller do
       before { sign_in user }
 
       it 'creates a subscription and redirects to question' do
-        expect {
+        expect do
           post :create, params: { question_id: question.id }
-        }.to change { user.subscriptions.count }.by(1)
+        end.to change { user.subscriptions.count }.by(1)
 
         expect(flash[:notice]).to eq("You have subscribed to #{question.title}")
         expect(response).to redirect_to(question)
       end
 
       it 'sends a subscription email' do
-        expect {
+        expect do
           post :create, params: { question_id: question.id }
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         subscription_email = ActionMailer::Base.deliveries.last
         expect(subscription_email.to).to include(user.email)
@@ -40,21 +40,22 @@ RSpec.describe SubscriptionsController, type: :controller do
   describe 'DELETE #destroy' do
     context 'when user is logged in' do
       before { sign_in user }
+
       let!(:subscription) { user.subscriptions.create!(question: question) }
 
       it 'destroys the subscription and redirects to question' do
-        expect {
+        expect do
           delete :destroy, params: { id: subscription.id }
-        }.to change { user.subscriptions.count }.by(-1)
+        end.to change { user.subscriptions.count }.by(-1)
 
         expect(flash[:notice]).to eq("You have unsubscribed from #{question.title}")
         expect(response).to redirect_to(question)
       end
 
       it 'sends an unsubscribe email' do
-        expect {
+        expect do
           delete :destroy, params: { question_id: question.id, id: subscription.id }
-        }.to change { ActionMailer::Base.deliveries.count }.by(1)
+        end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         unsubscribe_email = ActionMailer::Base.deliveries.last
         expect(unsubscribe_email.to).to include(user.email)

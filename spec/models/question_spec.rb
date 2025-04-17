@@ -17,13 +17,14 @@ RSpec.describe Question do
 
   it { is_expected.to accept_nested_attributes_for(:links) }
   it { is_expected.to accept_nested_attributes_for(:reward) }
-end
 
-describe 'reputation' do
-  let(:question) { build(:question) }
+  describe 'Question' do
+    let(:question) { build(:question) }
 
-  it 'calls ReputationJob' do
-    expect(ReputationJob).to receive(:perform_later).with(question)
-    question.save!
+    it 'calls ReputationJob' do
+      allow(ReputationJob).to receive(:perform_later).with(question)
+      question.save
+      expect(ReputationJob).to have_received(:perform_later).with(question)
+    end
   end
 end

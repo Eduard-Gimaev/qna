@@ -5,7 +5,7 @@ class Services::NotifySubscribers
   end
 
   def call
-    @question.subscriptions.includes(:user).each do |subscription|
+    @question.subscriptions.includes(:user).find_each do |subscription|
       user = subscription.user
       next if user == @answer.user || user.id == @answer.user_id
 
