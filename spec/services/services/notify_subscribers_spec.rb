@@ -27,7 +27,6 @@ RSpec.describe Services::NotifySubscribers do
 
   it 'does not send email to the author of the answer' do
     question.subscriptions.create!(user: author)
-
     perform_enqueued_jobs do
       expect do
         described_class.new(answer).call

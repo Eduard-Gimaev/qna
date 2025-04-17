@@ -1,8 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe SubscriptionsController do
+  include ActiveJob::TestHelper
+
   let(:user) { create(:user) }
   let(:question) { create(:question) }
+
+  before do
+    ActionMailer::Base.deliveries.clear
+  end
 
   describe 'POST #create' do
     context 'when user is logged in' do
@@ -19,7 +25,9 @@ RSpec.describe SubscriptionsController do
 
       it 'sends a subscription email' do
         expect do
-          post :create, params: { question_id: question.id }
+          perform_enqueued_jobs do
+            post :create, params: { question_id: question.id }
+          end
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         subscription_email = ActionMailer::Base.deliveries.last
@@ -54,7 +62,9 @@ RSpec.describe SubscriptionsController do
 
       it 'sends an unsubscribe email' do
         expect do
-          delete :destroy, params: { question_id: question.id, id: subscription.id }
+          perform_enqueued_jobs do
+            delete :destroy, params: { id: subscription.id }
+          end
         end.to change { ActionMailer::Base.deliveries.count }.by(1)
 
         unsubscribe_email = ActionMailer::Base.deliveries.last

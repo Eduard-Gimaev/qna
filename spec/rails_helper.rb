@@ -62,6 +62,10 @@ RSpec.configure do |config|
   config.after(:all) do
     FileUtils.rm_rf(Rails.root.join('tmp', 'storage', 'storage').to_s)
   end
+
+  config.before do
+    ActiveJob::Base.queue_adapter = :test
+  end
 end
 
 Shoulda::Matchers.configure do |config|

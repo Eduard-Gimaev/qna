@@ -7,7 +7,7 @@ class SubscriptionsController < ApplicationController
     authorize @subscription
 
     if @subscription.save
-      SubscriptionMailer.subscription(@subscription).deliver_now
+      SubscriptionMailer.subscription(@subscription).deliver_later
       flash[:notice] = "You have subscribed to #{@question.title}"
     end
 
@@ -18,9 +18,11 @@ class SubscriptionsController < ApplicationController
     @subscription = Subscription.find(params[:id])
     authorize @subscription
     @question = @subscription.question
+    @user = @subscription.user
+
     @subscription&.destroy
     if @subscription.destroyed?
-      SubscriptionMailer.unsubscribe(@subscription).deliver_now
+      SubscriptionMailer.unsubscribe(@user, @question).deliver_later
       flash[:notice] = "You have unsubscribed from #{@question.title}"
     end
     redirect_to @question

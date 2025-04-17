@@ -7,11 +7,9 @@ class SubscriptionMailer < ApplicationMailer
     mail(to: @user.email, subject: "You have subscribed to #{@question.title}")
   end
 
-  def unsubscribe(subscription)
-    @subscription = subscription
-    @question = subscription.question
-    @user = subscription.user
-
+  def unsubscribe(user, question)
+    @user = user
+    @question = question
     mail(to: @user.email, subject: "You have unsubscribed from #{@question.title}")
   end
 
