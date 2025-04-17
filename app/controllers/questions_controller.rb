@@ -17,6 +17,7 @@ class QuestionsController < ApplicationController
     @answer = @question.answers.new
     @answers = @question.answers.sort_by_best.order(:id)
     @answer.links.new
+    @subscription = @question.subscriptions.find_by(user: current_user)
   end
 
   def new

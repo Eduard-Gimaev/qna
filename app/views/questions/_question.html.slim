@@ -19,6 +19,14 @@
       = button_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     - if policy(question).destroy?
       = button_to 'Delete', question_path(find_question), method: :delete, remote: true
+    
+    - if @subscription
+      - if policy(@subscription).destroy?
+        = button_to 'Unsubscribe', subscription_path(@subscription), method: :delete
+    - else 
+      - if policy(Subscription.new(user: current_user, question: @question)).create?
+        = button_to 'Subscribe', question_subscriptions_path(@question), method: :post
+
 
   .attachments
     - if question.files.attached?

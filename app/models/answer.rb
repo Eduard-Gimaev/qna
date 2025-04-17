@@ -15,8 +15,6 @@ class Answer < ApplicationRecord
 
   scope :sort_by_best, -> { order(best: :desc) }
 
-  after_create :send_notification_to_question_author
-
   def mark_as_best
     # rubocop:disable Rails/SkipsModelValidations
     transaction do
@@ -28,11 +26,5 @@ class Answer < ApplicationRecord
       end
     end
     # rubocop:enable Rails/SkipsModelValidations
-  end
-
-  private 
-
-  def send_notification_to_question_author
-    QuestionAnsweredNotificationJob.perform_later(question, self)
   end
 end

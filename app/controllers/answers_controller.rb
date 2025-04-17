@@ -17,7 +17,13 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-    @answer.save
+    if @answer.save
+      QuestionAnsweredNotificationJob.perform_later(@question, @answer)
+      AnswerNotificationJob.perform_later(@question, @answer)
+      redirect_to @question, notice: 'Your answer has been successfully created.'
+    else
+      render :new
+    end
   end
 
   def update
