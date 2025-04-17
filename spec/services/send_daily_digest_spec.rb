@@ -1,8 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Services::DailyDigest do
-  subject(:daily_digest_service) { described_class.new }
-
+RSpec.describe SendDailyDigest do
   let!(:users) { create_list(:user, 3) }
 
   before do
@@ -11,7 +9,7 @@ RSpec.describe Services::DailyDigest do
 
   it 'sends daily digest emails to all users' do
     create(:question, user: users.first, created_at: 1.day.ago)
-    daily_digest_service.send_daily_digest
+    described_class.call
 
     users.each do |user|
       expect(DailyDigestMailer).to have_received(:digest).with(user)
@@ -19,7 +17,7 @@ RSpec.describe Services::DailyDigest do
   end
 
   it 'does not send emails if there are no new questions' do
-    daily_digest_service.send_daily_digest
+    described_class.call
 
     users.each do |user|
       expect(DailyDigestMailer).not_to have_received(:digest).with(user)

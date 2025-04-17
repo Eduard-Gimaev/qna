@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Services::NotifySubscribers do
+RSpec.describe NotifySubscribers do
   include ActiveJob::TestHelper
 
   let(:question) { create(:question) }

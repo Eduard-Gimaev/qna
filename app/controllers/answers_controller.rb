@@ -70,6 +70,7 @@ class AnswersController < ApplicationController
   end
 
   def authorize_answer!
-    authorize(find_answer || Answer)
+    @answer ||= Answer.new
+    authorize(@answer)
   end
 end

@@ -1,5 +1,5 @@
-class Services::DailyDigest
-  def send_daily_digest
+class SendDailyDigest
+  def self.call
     questions = Question.created_yesterday
     return if questions.empty?
 

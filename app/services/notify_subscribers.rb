@@ -1,4 +1,4 @@
-class Services::NotifySubscribers
+class NotifySubscribers
   def initialize(answer)
     @question = answer.question
     @answer = answer

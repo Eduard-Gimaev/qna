@@ -20,13 +20,11 @@ class Question < ApplicationRecord
 
   after_create :calculate_reputation
 
+  scope :created_yesterday, -> { where(created_at: 1.day.ago.all_day) }
+
   private
 
   def calculate_reputation
-    ReputationJob.perform_later(self)
-  end
-
-  def self.created_yesterday
-    where(created_at: 1.day.ago.all_day)
+    CalculateReputationJob.perform_later(self)
   end
 end

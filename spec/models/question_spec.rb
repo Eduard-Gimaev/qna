@@ -21,10 +21,10 @@ RSpec.describe Question do
   describe 'Question' do
     let(:question) { build(:question) }
 
-    it 'calls ReputationJob' do
-      allow(ReputationJob).to receive(:perform_later).with(question)
+    it 'calls CalculateReputationJob' do
+      allow(CalculateReputationJob).to receive(:perform_later).with(question)
       question.save
-      expect(ReputationJob).to have_received(:perform_later).with(question)
+      expect(CalculateReputationJob).to have_received(:perform_later).with(question)
     end
   end
 end

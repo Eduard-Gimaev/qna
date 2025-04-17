@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Services::FindForOauth do
+RSpec.describe FindForOauth do
   subject(:service) { described_class.new(auth) }
 
   let!(:user) { create(:user) }
