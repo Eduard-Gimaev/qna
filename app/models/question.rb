@@ -13,5 +13,18 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :links, reject_if: :all_blank
   accepts_nested_attributes_for :reward, reject_if: :all_blank
 
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user
+
   validates :title, :body, presence: true
+
+  after_create :calculate_reputation
+
+  scope :created_yesterday, -> { where(created_at: 1.day.ago.all_day) }
+
+  private
+
+  def calculate_reputation
+    CalculateReputationJob.perform_later(self)
+  end
 end

@@ -15,6 +15,7 @@ concern :commentable do
 end
 
 resources :questions, concerns: %i[votable commentable], shallow: true do
+  resources :subscriptions, only: %i[create destroy], shallow: true
   resources :answers, concerns: %i[votable commentable], shallow: true do
     member do
       patch :mark_as_best

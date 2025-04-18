@@ -17,7 +17,13 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-    @answer.save
+    if @answer.save
+      QuestionAnsweredNotificationJob.perform_later(@question, @answer)
+      AnswerNotificationJob.perform_later(@question, @answer)
+      redirect_to @question, notice: I18n.t('controllers.answers.success_notice')
+    else
+      render :new
+    end
   end
 
   def update
@@ -64,6 +70,7 @@ class AnswersController < ApplicationController
   end
 
   def authorize_answer!
-    authorize(find_answer || Answer)
+    @answer ||= Answer.new
+    authorize(@answer)
   end
 end

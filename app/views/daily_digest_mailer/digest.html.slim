@@ -1,0 +1,4 @@
+h2 Вопросы за последние сутки:
+ul
+  - @questions.each do |question|
+    li = link_to question.title, question_url(question)

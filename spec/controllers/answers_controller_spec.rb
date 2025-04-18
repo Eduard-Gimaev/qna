@@ -10,6 +10,7 @@ RSpec.describe AnswersController do
   let!(:user2) { create(:user) }
   let!(:question) { create(:question, user:) }
   let!(:answer) { create(:answer, question:, user:) }
+  let!(:answer2) { create(:answer, question:, user: user2) }
 
   describe 'POST #create' do
     context 'with valid attributes' do
@@ -83,15 +84,15 @@ RSpec.describe AnswersController do
     context 'when user tries to set the best answer to his own question' do
       before do
         login(user2)
-        patch :mark_as_best, params: { id: answer }, format: :js
+        patch :mark_as_best, params: { id: answer2 }, format: :js
       end
 
       it 'does not set the best answer' do
-        expect { answer.reload }.not_to change(answer, :best)
+        expect { answer2.reload }.not_to change(answer2, :best)
       end
 
-      it 'renders mark_best template' do
-        expect(response).to render_template :mark_as_best
+      it 'does not render mark_best template' do
+        expect(response).not_to render_template :mark_as_best
       end
     end
   end
