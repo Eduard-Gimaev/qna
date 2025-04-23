@@ -1,0 +1,13 @@
+development:
+  address: 127.0.0.1
+  port: 9306
+  log: log/development.searchd.log
+  query_log: log/development.searchd.query.log
+  pid_file: tmp/pids/searchd.development.pid
+  configuration_file: config/development.sphinx.conf
+  bin_path: ''
+  charset_table: "0..9, A..Z->a..z, _, a..z, \
+    U+410..U+42F->U+430..U+44F, \
+    U+430..U+44F, U+401->U+435, U+451->U+435"
+test:
+  mysql41: 9307

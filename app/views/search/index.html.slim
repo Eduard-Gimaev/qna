@@ -1,0 +1,21 @@
+<h1>Search Results</h1>
+
+<% if @results.present? %>
+  <ul>
+    <% @results.each do |result| %>
+      <li>
+        <% if result.is_a?(Question) %>
+          <strong>Question:</strong> <%= link_to result.title, question_path(result) %>
+        <% elsif result.is_a?(Answer) %>
+          <strong>Answer:</strong> <%= result.body %>
+        <% elsif result.is_a?(Comment) %>
+          <strong>Comment:</strong> <%= result.body %>
+        <% elsif result.is_a?(User) %>
+          <strong>User:</strong> <%= result.email %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No results found</p>
+<% end %>

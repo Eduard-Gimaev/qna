@@ -9,3 +9,13 @@
       - else
         p = 'You need to sign in to write question'
         = button_to 'Log In', new_user_session_path
+        
+    .search-form class='col'
+      = form_with url: search_path, method: :get, local: true do |form|
+        .form-row
+          .col
+            = form.text_field :query, class: 'form-control', placeholder: 'Search...'
+          .col
+            = form.select :scope, options_for_select([['All', 'all'], ['Questions', 'questions'], ['Answers', 'answers'], ['Comments', 'comments'], ['Users', 'users']]), class: 'form-control'
+          .col
+            = form.submit 'Search', class: 'btn btn-primary'

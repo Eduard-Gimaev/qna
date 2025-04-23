@@ -1,5 +1,6 @@
 use_doorkeeper
 root to: 'questions#index'
+get 'search', to: 'search#index'
 
 devise_for :users, controllers: { omniauth_callbacks: 'oauth_callbacks' }
 
