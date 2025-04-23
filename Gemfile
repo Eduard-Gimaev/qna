@@ -43,8 +43,10 @@ gem 'cocoon'
 gem 'devise'
 gem 'doorkeeper'
 gem 'jquery-rails'
+gem 'mysql2-cs-bind'
 gem 'oj'
 gem 'slim-rails'
+gem 'thinking-sphinx'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -77,6 +79,7 @@ group :test do
   gem 'capybara', '>= 3.26'
   gem 'selenium-webdriver', '>= 4.0.0.rc1'
   # Easy installation and use of web drivers to run system tests with browsers
+  gem 'database_cleaner-active_record'
   gem 'launchy'
   gem 'pundit-matchers'
   gem 'rails-controller-testing'

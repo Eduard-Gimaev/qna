@@ -41,4 +41,13 @@ yarn-debug.log*
 
 # Ignore .zshrc
 .zshrc
+# Ignore .env files
+.env
 
+db/sphinx
+config/database.yml
+config/master.key
+config/thinking_sphinx.yml
+
+config/development.sphinx.conf
+config/test.sphinx.conf

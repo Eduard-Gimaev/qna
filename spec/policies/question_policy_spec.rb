@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe QuestionPolicy do
   subject(:policy) { described_class }
 
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
   let(:author) { create(:user) }
   let(:question) { create(:question, user: author) }
 
@@ -32,13 +32,13 @@ RSpec.describe QuestionPolicy do
   end
 
   permissions :create? do
-    include_examples 'grants access if user is present'
-    include_examples 'denies access if user is not present'
+    it_behaves_like 'grants access if user is present'
+    it_behaves_like 'denies access if user is not present'
   end
 
   permissions :update?, :destroy? do
-    include_examples 'grants access if user is author'
-    include_examples 'denies access if user is not author'
+    it_behaves_like 'grants access if user is author'
+    it_behaves_like 'denies access if user is not author'
   end
 
   permissions :vote? do

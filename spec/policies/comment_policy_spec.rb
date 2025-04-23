@@ -33,12 +33,12 @@ RSpec.describe CommentPolicy do
   end
 
   permissions :create? do
-    include_examples 'grants access if user is present'
-    include_examples 'denies access if user is not present'
+    it_behaves_like 'grants access if user is present'
+    it_behaves_like 'denies access if user is not present'
   end
 
   permissions :destroy? do
-    include_examples 'grants access if user is author'
-    include_examples 'denies access if user is not author'
+    it_behaves_like 'grants access if user is author'
+    it_behaves_like 'denies access if user is not author'
   end
 end
