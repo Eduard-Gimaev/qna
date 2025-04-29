@@ -31,7 +31,7 @@ gem 'pundit'
 gem 'sidekiq'
 gem 'sinatra', require: false
 gem 'whenever', require: false
-
+gem 'mini_racer' # for js runtime
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
