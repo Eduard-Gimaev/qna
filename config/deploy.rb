@@ -8,7 +8,11 @@ set :repo_url, "git@github.com:Eduard-Gimaev/qna.git"
 set :deploy_to, "/home/deployer/qna-app-server"
 
 set :default_env, {
-  'PATH' => '$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH'
+  'PATH' => '$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH',
+  'DATABASE_USERNAME' => 'postgres',
+  'DATABASE_PASSWORD' => 'bQ^2_rAx-DNX+vH',
+  'DATABASE_HOST' => '127.0.0.1',
+  'DATABASE_PORT' => '5432'
 }
 
 set :branch, ENV['BRANCH'] || 'main'
