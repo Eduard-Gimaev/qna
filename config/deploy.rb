@@ -19,6 +19,8 @@ set :branch, ENV['BRANCH'] || 'main'
 
 set :bundle_jobs, 2
 
+set :keep_releases, 3
+
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
 
