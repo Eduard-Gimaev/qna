@@ -1,6 +1,7 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.19.2"
 
+
 set :application, "qna-app-server"
 set :repo_url, "git@github.com:Eduard-Gimaev/qna.git"
 
@@ -20,6 +21,8 @@ set :branch, ENV['BRANCH'] || 'main'
 set :bundle_jobs, 2
 
 set :keep_releases, 3
+
+Rake::Task["deploy:assets:precompile"].clear
 
 # Default value for :linked_files is []
 append :linked_files, "config/database.yml", 'config/master.key'
