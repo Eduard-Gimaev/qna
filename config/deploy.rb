@@ -8,6 +8,12 @@ set :repo_url, "git@github.com:Eduard-Gimaev/qna.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna-app-server"
 
+# Default value for :linked_files is []
+append :linked_files, "config/database.yml", 'config/master.key'
+
+# Default value for linked_dirs is []
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "vendor", "storage"
+
 set :default_env, {
   'PATH' => '$HOME/.asdf/bin:$HOME/.asdf/shims:$PATH',
   'DATABASE_USERNAME' => 'postgres',
@@ -22,10 +28,4 @@ set :bundle_jobs, 2
 
 set :keep_releases, 3
 
-Rake::Task["deploy:assets:precompile"].clear
-
-# Default value for :linked_files is []
-append :linked_files, "config/database.yml", 'config/master.key'
-
-# Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "public/system", "vendor", "storage"
+# Rake::Task["deploy:assets:precompile"].clear
