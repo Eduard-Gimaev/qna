@@ -28,4 +28,4 @@ set :bundle_jobs, 2
 
 set :keep_releases, 3
 
-# Rake::Task["deploy:assets:precompile"].clear
+Rake::Task["deploy:assets:precompile"].clear
