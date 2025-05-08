@@ -42,4 +42,4 @@ set :puma_daemonize, true
 set :puma_init_active_record, true
 
 
-# Rake::Task['deploy:assets:precompile'].clear_actions
+Rake::Task['deploy:assets:precompile'].clear_actions
