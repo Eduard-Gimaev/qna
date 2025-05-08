@@ -48,6 +48,8 @@ gem 'oj'
 gem 'slim-rails'
 gem 'thinking-sphinx'
 gem 'capistrano3-puma', require: false
+gem 'ed25519', '~> 1.2'
+gem 'bcrypt_pbkdf', '~> 1.0'
 
 
 
