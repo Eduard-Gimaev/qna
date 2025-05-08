@@ -1,7 +1,6 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.19.2"
 
-
 set :application, "qna-app-server"
 set :repo_url, "git@github.com:Eduard-Gimaev/qna.git"
 
@@ -28,4 +27,18 @@ set :bundle_jobs, 2
 
 set :keep_releases, 3
 
-Rake::Task["deploy:assets:precompile"].clear
+Rake::Task["deploy:assets:precompile"].clear  # server-based syntax
+
+# Puma configuration
+set :puma_threads, [1, 6]
+set :puma_workers, 2
+
+set :puma_bind, "unix://#{shared_path}/tmp/sockets/puma.sock"
+set :puma_state, "#{shared_path}/tmp/pids/puma.state"
+set :puma_pid, "#{shared_path}/tmp/pids/puma.pid"
+set :puma_access_log, "#{shared_path}/log/puma.access.log"
+set :puma_error_log, "#{shared_path}/log/puma.error.log"
+
+set :puma_preload_app, true
+set :puma_daemonize, true
+set :puma_init_active_record, true
