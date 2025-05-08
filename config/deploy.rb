@@ -27,8 +27,6 @@ set :bundle_jobs, 2
 
 set :keep_releases, 3
 
-Rake::Task["deploy:assets:precompile"].clear  # server-based syntax
-
 # Puma configuration
 set :puma_threads, [1, 6]
 set :puma_workers, 2

@@ -47,6 +47,8 @@ gem 'mysql2-cs-bind'
 gem 'oj'
 gem 'slim-rails'
 gem 'thinking-sphinx'
+gem 'capistrano3-puma', require: false
+
 
 
 group :development, :test do
