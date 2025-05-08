@@ -40,3 +40,6 @@ set :puma_error_log, "#{shared_path}/log/puma.error.log"
 set :puma_preload_app, true
 set :puma_daemonize, true
 set :puma_init_active_record, true
+
+
+Rake::Task['deploy:assets:precompile'].clear_actions

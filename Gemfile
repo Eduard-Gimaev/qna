@@ -10,7 +10,7 @@ gem 'rails', '~> 6.1.7', '>= 6.1.7.8'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 # Use Puma as the app server
-gem 'puma', '~> 5.0'
+gem 'puma', '>= 6.0'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
@@ -47,7 +47,6 @@ gem 'mysql2-cs-bind'
 gem 'oj'
 gem 'slim-rails'
 gem 'thinking-sphinx'
-gem 'capistrano3-puma', require: false
 gem 'ed25519', '~> 1.2'
 gem 'bcrypt_pbkdf', '~> 1.0'
 
@@ -80,6 +79,7 @@ group :development do
   gem 'capistrano', '~> 3.17', require: false
   gem 'capistrano-bundler', '~> 1.6', require: false
   gem 'capistrano-rails', '~> 1.6', require: false
+  gem 'capistrano3-puma', require: false
   gem 'capistrano-sidekiq', github: 'seuros/capistrano-sidekiq', require: false
 end
 
