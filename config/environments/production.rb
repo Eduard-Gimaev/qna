@@ -33,9 +33,9 @@ Rails.application.configure do
   config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
-
-  config.logger = Logger.new($stdout)
+  logfile = File.open(Rails.root.join("log", "#{Rails.env}.log"), "a")
+  logfile.sync = true
+  config.logger = ActiveSupport::Logger.new(logfile)
   config.logger.formatter = ::Logger::Formatter.new
 
   # Do not dump schema after migrations.

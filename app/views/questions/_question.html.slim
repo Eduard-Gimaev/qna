@@ -43,7 +43,7 @@
               li = link_to link.name, link.url
   .rewards
       ul
-        - if question.reward
+          - if question.reward&.image&.attached?
           = image_tag(question.reward.image)            
           li = question.reward.title
   .voting
